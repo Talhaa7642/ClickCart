@@ -1,0 +1,96 @@
+export const CategoriesArray = [
+  {
+    id: 1,
+    serviceName: 'AC Maintainer',
+    name: 'Ijaz',
+    desc: 'Your home electrition',
+    image: require('../assets/images/air-conditioner.png'),
+  },
+  {
+    id: 2,
+    serviceName: 'Carpenter',
+    name: 'Ijaz',
+    desc: 'Your home electrition',
+    image: require('../assets/images/carpenter.png'),
+  },
+  {
+    id: 3,
+    serviceName: 'Electrition',
+    name: 'Ijaz',
+    desc: 'Your home electrition',
+    image: require('../assets/images/electrician.png'),
+  },
+  {
+    id: 4,
+    serviceName: 'Painter',
+    name: 'Ijaz',
+    desc: 'Your home electrition',
+    image: require('../assets/images/painter.png'),
+  },
+  {
+    id: 5,
+    serviceName: 'Beautician',
+    name: 'Ijaz',
+    desc: 'Your home electrition',
+    image: require('../assets/images/beautician.png'),
+  },
+  {
+    id: 6,
+    serviceName: 'Plumber',
+    name: 'Ijaz',
+    desc: 'Your home electrition',
+    image: require('../assets/images/plumber.png'),
+  },
+  {
+    id: 7,
+    serviceName: 'Home Appliance',
+    name: 'Ijaz',
+    desc: 'Your home electrition',
+    image: require('../assets/images/homeappliance.png'),
+  },
+];
+
+export const ServicesArray = [
+  {
+    id: 1,
+    serviceName: 'Service',
+    name: 'Ijaz',
+    desc: 'Your home electrition',
+    image: require('../assets/images/air-conditioner.png'),
+  },
+  {
+    id: 2,
+    serviceName: 'Services Providers',
+    name: 'Ijaz',
+    desc: 'Your home electrition',
+    image: require('../assets/images/carpenter.png'),
+  },
+  {
+    id: 3,
+    serviceName: 'Booked Requests',
+    name: 'Ijaz',
+    desc: 'Your home electrition',
+    image: require('../assets/images/booking.png'),
+  },
+  {
+    id: 4,
+    serviceName: 'Pending Requests',
+    name: 'Ijaz',
+    desc: 'Your home electrition',
+    image: require('../assets/images/booking.png'),
+  },
+  {
+    id: 5,
+    serviceName: 'Comlpeted Requests',
+    name: 'Ijaz',
+    desc: 'Your home electrition',
+    image: require('../assets/images/booking.png'),
+  },
+  {
+    id: 6,
+    serviceName: 'Cancled Requests',
+    name: 'Ijaz',
+    desc: 'Your home electrition',
+    image: require('../assets/images/booking.png'),
+  },
+];

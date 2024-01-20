@@ -1,0 +1,13 @@
+export const BG_COLOR = '#FF6600';
+export const WHITE = '#FFFFFF';
+export const SOLID_BLACK = '#000000';
+export const LIGHT_GREY = '#393A3D';
+export const GREY_500 = '#9E9E9E'
+export const GREY = '#0000003b';
+export const RED = '#FF0000';
+export const SCREEN_BG = "#EBEBEB";
+export const YELLOW = "#F9A825";
+export const RED_ERROR = "#D32F2F";
+export const PRIMARY_COLOR = "#1A3E9C";
+export const LIGHT_GREEN = "#8FD36F";
+export const GREEN = "#39C815"

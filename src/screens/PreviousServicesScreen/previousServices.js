@@ -40,7 +40,7 @@ const PreviousServicesScreen = ({route, navigation}) => {
           {filteredCategories.map(category => (
             <View style={{alignItems: 'center'}} key={category.id}>
               <PreviousOrders
-                serviceName={category.serviceName}
+                serviceName={'category.serviceName'}
                 onPress={() => navigateToServiceProviderScreen()}
               />
             </View>

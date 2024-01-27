@@ -5,16 +5,15 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    // justifyContent: 'center',
   },
   logo: {height: 180, width: 180, borderRadius: 60, marginBottom: 10},
   input: {
     height: 54,
-    width: '100%',
+    width: '90%',
     marginVertical: 12,
     padding: 10,
     backgroundColor: WHITE,
-    borderRadius: 28,
+    borderRadius: 20,
     elevation: 1,
   },
   loginButton: {

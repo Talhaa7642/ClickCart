@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
+  ScrollView,
 } from 'react-native';
 import {WHITE} from '../../utils/colors';
 import Categories from '../../components/categories';
@@ -14,7 +15,6 @@ import {CategoriesArray} from '../../utils/constants';
 
 const HomeScreen = ({navigation, route}) => {
   const {location} = route.params || '';
-  console.log('location', location);
 
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredCategories, setFilteredCategories] = useState(CategoriesArray);
@@ -54,15 +54,15 @@ const HomeScreen = ({navigation, route}) => {
       </View>
       <TextInput
         style={styles.input}
-        placeholder="Search"
+        placeholder="Search a Store or Product"
         value={searchQuery}
         onChangeText={handleSearch}
       />
-      <View style={styles.categories}>
+      <ScrollView style={styles.categories}>
         {filteredCategories.map(category => (
-          <View style={{flexGrow: 15, alignItems: 'center'}} key={category.id}>
+          <View style={{}} key={category.id}>
             <Categories
-              serviceName={category.serviceName}
+              serviceName={category.name}
               serviceImage={category.image}
               onPress={() =>
                 navigation.navigate(
@@ -73,7 +73,7 @@ const HomeScreen = ({navigation, route}) => {
             />
           </View>
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     backgroundColor: WHITE,
     padding: '5%',
-    flexDirection: 'row',
+    // flexDirection: 'row',
     flexWrap: 'wrap',
     borderRadius: 20,
     // alignItems: 'center',

@@ -17,11 +17,11 @@ const ServiceProviderScreen = ({route, navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredCategories, setFilteredCategories] = useState(CategoriesArray);
 
-  useEffect(() => {
-    setFilteredCategories(
-      CategoriesArray.filter(el => el.serviceName == serviceName),
-    );
-  }, []);
+  // useEffect(() => {
+  //   setFilteredCategories(
+  //     CategoriesArray.filter(el => el.serviceName == serviceName),
+  //   );
+  // }, []);
 
   const handleSearch = query => {
     setSearchQuery(query);

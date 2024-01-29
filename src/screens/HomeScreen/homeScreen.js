@@ -8,10 +8,12 @@ import {
   TouchableOpacity,
   ImageBackground,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import {WHITE} from '../../utils/colors';
 import Categories from '../../components/categories';
 import {CategoriesArray} from '../../utils/constants';
+import ShopsCard from '../../components/ShopsCard';
 
 const HomeScreen = ({navigation, route}) => {
   const {location} = route.params || '';
@@ -32,6 +34,26 @@ const HomeScreen = ({navigation, route}) => {
   const navigateToServiceProviderScreen = () => {
     navigation.navigate('ServiceProviderScreen', {});
   };
+
+  const renderItemH = ({item}) => (
+    <ShopsCard
+      item={item}
+      onPress={() =>
+        navigation.navigate('ServiceProviderScreen', item.serviceName)
+      }
+    />
+  );
+
+  const renderItemV = ({item}) => (
+    <Categories
+      name={item.name}
+      serviceName={item.serviceName}
+      serviceImage={item.image}
+      onPress={() =>
+        navigation.navigate('ServiceProviderScreen', item.serviceName)
+      }
+    />
+  );
 
   return (
     <View style={styles.container}>
@@ -58,22 +80,21 @@ const HomeScreen = ({navigation, route}) => {
         value={searchQuery}
         onChangeText={handleSearch}
       />
-      <ScrollView style={styles.categories}>
-        {filteredCategories.map(category => (
-          <View style={{}} key={category.id}>
-            <Categories
-              serviceName={category.name}
-              serviceImage={category.image}
-              onPress={() =>
-                navigation.navigate(
-                  'ServiceProviderScreen',
-                  category.serviceName,
-                )
-              }
-            />
-          </View>
-        ))}
-      </ScrollView>
+
+      <FlatList
+        horizontal
+        data={filteredCategories}
+        keyExtractor={item => item.id.toString()}
+        renderItem={renderItemH}
+      />
+
+      <FlatList
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+        data={filteredCategories}
+        keyExtractor={item => item.id.toString()}
+        renderItem={renderItemV}
+      />
     </View>
   );
 };
@@ -100,6 +121,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: '2%',
     marginVertical: '2%',
+  },
+  row: {
+    flex: 1,
+    justifyContent: 'space-around',
   },
   loactionText: {
     fontSize: 18,

@@ -6,22 +6,39 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  Pressable,
 } from 'react-native';
-import {BLACK0, WHITE} from '../utils/colors';
+import {BLACK0, LIGHT_GREY1, SOLID_BLACK, WHITE} from '../utils/colors';
+import Circle from './Circle';
+import {AntDesign} from '../utils/icons';
+import SmallButton from './SmallButton';
 
 const Categories = props => {
   return (
-    <View style={styles.categoryContainer}>
+    <View
+      style={[styles.categoryContainer, props.store && {marginBottom: '10%'}]}>
       <TouchableOpacity onPress={props.onPress} style={styles.card}>
         <ImageBackground
           style={styles.categoryImage}
           source={props.serviceImage}>
-          {/* <TouchableOpacity style={{height: 10, backgroundColor: 'grey'}}> */}
+          {props.fav ? (
+            <Circle
+              size={34}
+              containerStyle={{alignSelf: 'flex-end', margin: 8}}>
+              <AntDesign name="hearto" size={20} color={SOLID_BLACK} />
+            </Circle>
+          ) : null}
+
           <Text style={styles.name}>{props.name}</Text>
-          {/* </TouchableOpacity> */}
+
+          {props.store ? (
+            <SmallButton title="General Store" onPress={props.onStorePress} />
+          ) : null}
         </ImageBackground>
       </TouchableOpacity>
-      <Text style={styles.serviceName}>{props.serviceName}</Text>
+      {props.store ? null : (
+        <Text style={styles.serviceName}>{props.serviceName}</Text>
+      )}
     </View>
   );
 };

@@ -16,10 +16,9 @@ export default ShopsCard;
 const styles = StyleSheet.create({
   container: {
     height: 120,
-    width: 90,
-    backgroundColor: 'red',
+    width: 80,
     alignItems: 'center',
-    // marginRight: 4,
+    marginRight: 4,
   },
   image: {
     width: 46,

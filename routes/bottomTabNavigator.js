@@ -11,10 +11,12 @@ import {HOME_ICON} from '../src/utils/assets';
 import PreviousServicesScreen from '../src/screens/PreviousServicesScreen/previousServices';
 import ProfileScreen from '../src/screens/ProfileScreen/profileScreen';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import StoreScreen from '../src/screens/Store/StoreScreen';
+import StoreProductsScreen from '../src/screens/StoreProductsScreen/StoreProductsScreen';
+import ProductDetail from '../src/screens/ProductDetail/ProductDetail';
 
 const BottomTabNavigator = ({navigation}) => {
   const Tab = createBottomTabNavigator();
-
   return (
     <Tab.Navigator
       screenOptions={{
@@ -43,12 +45,31 @@ const BottomTabNavigator = ({navigation}) => {
         name="StoreScreen"
         options={{
           headerShown: false,
-          tabBarLabel: 'OrderScreen',
           tabBarIcon: ({color}) => (
             <Fontisto name="shopping-store" size={20} color={color} />
           ),
         }}
-        component={PreviousServicesScreen}
+        component={StoreScreen}
+      />
+
+      <Tab.Screen
+        name="StoreProductsScreen"
+        options={{
+          headerShown: false,
+          tabBarStyle: {display: 'none'},
+          tabBarButton: () => null,
+        }}
+        component={StoreProductsScreen}
+      />
+
+      <Tab.Screen
+        name="ProductDetail"
+        options={{
+          headerShown: false,
+          tabBarStyle: {display: 'none'},
+          tabBarButton: () => null,
+        }}
+        component={ProductDetail}
       />
 
       <Tab.Screen

@@ -1,19 +1,13 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  ImageBackground,
-  ScrollView,
-  FlatList,
-} from 'react-native';
-import {WHITE} from '../../utils/colors';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {GREY_MID, SOLID_BLACK, WHITE} from '../../utils/colors';
 import Categories from '../../components/categories';
 import {CategoriesArray} from '../../utils/constants';
 import ShopsCard from '../../components/ShopsCard';
+import MenuSvg from '../../assets/Svgs/MenuSvg';
+import Avatar from '../../components/Avatar';
+import AppTextInput from '../../components/AppTextInput';
+import Circle from '../../components/Circle';
 
 const HomeScreen = ({navigation, route}) => {
   const {location} = route.params || '';
@@ -46,6 +40,7 @@ const HomeScreen = ({navigation, route}) => {
 
   const renderItemV = ({item}) => (
     <Categories
+      fav
       name={item.name}
       serviceName={item.serviceName}
       serviceImage={item.image}
@@ -57,29 +52,23 @@ const HomeScreen = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.services}>Services</Text>
-      <View style={styles.headerView}>
-        <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <Image source={require('../../assets/logos/googleMaps.png')} />
-          <Text style={styles.loactionText}>
-            {location ? location : 'Lahore'}
-          </Text>
-        </TouchableOpacity>
-        <ImageBackground
-          style={styles.profilePic}
-          source={require('../../assets/images/carpenter.png')}
-        />
+      <View style={styles.row1}>
+        <Circle>
+          <MenuSvg />
+        </Circle>
+        <Avatar uri={require('../../assets/images/carpenter.png')} />
       </View>
-      <TextInput
-        style={styles.input}
-        placeholder="Search a Store or Product"
-        value={searchQuery}
-        onChangeText={handleSearch}
-      />
+
+      <AppTextInput placeholder="Search A Store or Product" />
+
+      <View style={styles.row1}>
+        <Text
+          onPress={() => navigation.navigate('StoreScreen')}
+          style={styles.catTxt}>
+          Categories
+        </Text>
+        <Text style={styles.viewTxt}>view all</Text>
+      </View>
 
       <FlatList
         horizontal
@@ -104,7 +93,8 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: '2%',
+    padding: '4%',
+    paddingBottom: 0,
   },
   services: {
     alignSelf: 'center',
@@ -136,14 +126,21 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     // backgroundColor: 'green',
   },
-  input: {
-    height: 54,
-    width: '100%',
-    marginVertical: 12,
-    padding: 10,
-    backgroundColor: WHITE,
-    borderRadius: 28,
-    elevation: 1,
+  row1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  catTxt: {
+    color: SOLID_BLACK,
+    fontSize: 18,
+    fontWeight: '400',
+  },
+  viewTxt: {
+    color: GREY_MID,
+    fontSize: 12,
+    fontWeight: '400',
   },
   categories: {
     // flex: 1,

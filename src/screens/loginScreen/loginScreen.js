@@ -20,11 +20,11 @@ const LoginScreen = ({navigation}) => {
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    if (number === 'admin' && password === 'admin') {
-      navigation.navigate('AdminDashboard');
-    } else if (number === 'user' && password === 'user') {
-      navigation.navigate('ScanQRScreen');
-    }
+    // if (number === 'admin' && password === 'admin') {
+    //   navigation.navigate('AdminDashboard');
+    // } else if (number === 'user' && password === 'user') {
+    // }
+    navigation.navigate('ScanQRScreen');
   };
 
   return (
@@ -63,7 +63,7 @@ const LoginScreen = ({navigation}) => {
             shadowOpacity: 0.5,
             shadowRadius: 2,
             marginTop: '8%',
-            marginBottom: '4%'
+            marginBottom: '4%',
           }}>
           <TextInput
             style={styles.input}
@@ -80,7 +80,9 @@ const LoginScreen = ({navigation}) => {
             secureTextEntry
           />
         </View>
-        <TouchableOpacity onPress={()=> navigation.navigate('ForgotPassword')}  style={{}}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ForgotPassword')}
+          style={{}}>
           <Text style={{fontSize: 16, color: RED_ERROR, right: 0}}>
             Forgot Password
           </Text>
@@ -96,13 +98,12 @@ const LoginScreen = ({navigation}) => {
           </Text>
           <TouchableOpacity
             onPress={() => navigation.navigate('SignUpScreen')}
-            style={{ alignItems: 'flex-end'}}>
+            style={{alignItems: 'flex-end'}}>
             <Text style={{fontSize: 18, color: PRIMARY_COLOR, right: 0}}>
               SignUp
             </Text>
           </TouchableOpacity>
         </View>
-        
       </View>
     </LinearGradient>
     // </View>

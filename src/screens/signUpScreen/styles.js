@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {PRIMARY_COLOR, WHITE} from '../../utils/colors';
+import {PRIMARY_COLOR, SOLID_BLACK, WHITE} from '../../utils/colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -12,13 +12,17 @@ export const styles = StyleSheet.create({
     // marginHorizontal: 40,
   },
 
-  input: {
-    height: '6%',
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     width: '90%',
     marginVertical: '2%',
-    padding: 10,
+    padding: 8,
     backgroundColor: WHITE,
-    borderRadius: 22,
+    borderRadius: 8,
     elevation: 1,
+  },
+  input: {
+    color: SOLID_BLACK,
   },
 });

@@ -16,6 +16,8 @@ import BookingScreen from '../src/screens/AdminSide/BookingReq/bookingReq';
 import AddProviders from '../src/screens/AdminSide/AddProviders/addProviders';
 import ForgotPassword from '../src/screens/forgotPassword/forgotPassword';
 import ScanQRScreen from '../src/screens/scanQRCodeScreen/scanQRScreen';
+import CreatePassword from '../src/screens/CreatePassword/CreatePassword';
+import SearchStore from '../src/screens/SearchStore/SearchStore';
 const Stack = createNativeStackNavigator();
 
 export default function RoutesStack() {
@@ -50,7 +52,9 @@ export default function RoutesStack() {
         <Stack.Screen name="AddServices" component={AddServices} />
         <Stack.Screen name="AddProviders" component={AddProviders} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="CreatePassword" component={CreatePassword} />
         <Stack.Screen name="ScanQRScreen" component={ScanQRScreen} />
+        <Stack.Screen name="SearchStore" component={SearchStore} />
       </Stack.Navigator>
     </NavigationContainer>
   );

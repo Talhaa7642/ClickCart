@@ -1,9 +1,16 @@
 import React, {useState} from 'react';
 import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
-import {PRIMARY_COLOR, WHITE} from '../../utils/colors';
+import {
+  DARK_GREY,
+  LIGHT_GREY1,
+  PRIMARY_COLOR,
+  SOLID_BLACK,
+  WHITE,
+} from '../../utils/colors';
 import {RED_ERROR} from '../../utils/colors';
 import {styles} from './styles';
 import LinearGradient from 'react-native-linear-gradient';
+import {Ionicons} from '../../utils/icons';
 
 const ForgotPassword = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -23,41 +30,45 @@ const ForgotPassword = ({navigation}) => {
       style={[styles.container]}>
       <View
         style={{
-          height: '40%',
+          height: '36%',
           backgroundColor: 'white',
-          width: '100%',
+          width: '90%',
           borderRadius: 20,
           alignItems: 'center',
-          // justifyContent: 'center',
+          justifyContent: 'space-evenly',
         }}>
-        <Text style={{fontWeight: '500', fontSize: 16, marginVertical: '4%'}}>
+        <Text
+          style={{
+            fontWeight: '700',
+            fontSize: 12,
+            marginVertical: '4%',
+            color: SOLID_BLACK,
+          }}>
           Forgot Password?
         </Text>
-        <Text style={{fontWeight: '400', fontSize: 14, marginHorizontal: '6%'}}>
+
+        <Text
+          style={{
+            fontWeight: '400',
+            fontSize: 16,
+            marginHorizontal: '6%',
+            color: SOLID_BLACK,
+          }}>
           Enter Your Email Address For Verification Process, So We Can Send 4
           Digit Code To Your Email
         </Text>
-        <View
-          style={{
-            backgroundColor: '#D9D9D9',
-            width: '94%',
-            paddingVertical: '4%',
-            borderRadius: 20,
-            alignItems: 'center',
-            justifyContent: 'center',
-            elevation: 1,
-            shadowColor: '#000',
-            shadowOffset: {width: 0, height: 1},
-            shadowOpacity: 0.5,
-            shadowRadius: 2,
-            marginTop: '8%',
-            marginBottom: '4%',
-          }}>
+
+        <View style={styles.inputContainer}>
+          <Ionicons
+            style={{marginHorizontal: '4%'}}
+            name="lock-closed"
+            size={22}
+            color={LIGHT_GREY1}
+          />
           <TextInput
             style={styles.input}
-            onChangeText={setEmail}
-            value={email}
-            placeholder="Enter Email Address"
+            placeholder="Email"
+            placeholderTextColor={DARK_GREY}
           />
         </View>
 
@@ -67,6 +78,14 @@ const ForgotPassword = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate('CreatePassword')}
+        style={styles.loginButton}>
+        <Text style={{fontSize: 20, fontWeight: 'bold', color: WHITE}}>
+          Verfication mail has been sent!
+        </Text>
+      </TouchableOpacity>
     </LinearGradient>
     // </View>
   );

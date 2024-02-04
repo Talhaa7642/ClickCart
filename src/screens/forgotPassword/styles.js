@@ -1,29 +1,37 @@
 import {StyleSheet} from 'react-native';
-import {PRIMARY_COLOR, WHITE} from '../../utils/colors';
+import {
+  LIGHT_PURPLE,
+  PRIMARY_COLOR,
+  SOLID_BLACK,
+  WHITE,
+} from '../../utils/colors';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: WHITE,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
   },
   logo: {height: 180, width: 180, borderRadius: 60, marginBottom: 10},
-  input: {
-    height: 44,
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     width: '90%',
-    margin: '3%',
-    padding: 10,
-    // backgroundColor: WHITE,
-    // borderRadius: 22,
+    marginVertical: '2%',
+    padding: 8,
+    backgroundColor: WHITE,
+    borderRadius: 8,
     elevation: 1,
-    borderBottomWidth: 1, borderBottomColor: 'grey'
+  },
+  input: {
+    color: SOLID_BLACK,
   },
   loginButton: {
-    backgroundColor: PRIMARY_COLOR,
+    backgroundColor: LIGHT_PURPLE,
     height: 44,
     width: '90%',
-    borderRadius: 22,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: '4%',

@@ -9,6 +9,7 @@ const AppTextInput = ({
   value,
   onChangeText,
   inputStyle,
+  textInputStyle,
 }) => {
   return (
     <View style={[styles.row1, styles.inputContainer, inputStyle]}>
@@ -18,7 +19,7 @@ const AppTextInput = ({
         </View>
       )}
       <TextInput
-        style={styles.input}
+        style={[styles.input, textInputStyle]}
         placeholder={placeholder}
         placeholderTextColor={GREY_NEUTRAL}
         value={value}
@@ -51,7 +52,6 @@ const styles = StyleSheet.create({
   input: {
     height: 54,
     flex: 1,
-    // width: '100%',
     padding: 10,
     color: SOLID_BLACK,
     fontSize: 16,

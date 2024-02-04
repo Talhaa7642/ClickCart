@@ -15,6 +15,10 @@ export const styles = StyleSheet.create({
     backgroundColor: WHITE,
     borderRadius: 20,
     elevation: 1,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 14,
   },
   loginButton: {
     backgroundColor: PRIMARY_COLOR,

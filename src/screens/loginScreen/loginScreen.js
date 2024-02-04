@@ -8,12 +8,20 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import {PRIMARY_COLOR, SOLID_BLACK, WHITE} from '../../utils/colors';
+import {
+  MID_PURPLE,
+  PRIMARY_COLOR,
+  SOLID_BLACK,
+  WHITE,
+} from '../../utils/colors';
 import Svg, {SvgXml} from 'react-native-svg';
 import {RED_ERROR} from '../../utils/colors';
 import {styles} from './styles';
 import {SPLASH_SCREEN_IMAGE} from '../../utils/assets';
 import LinearGradient from 'react-native-linear-gradient';
+import Divider from '../../components/Divider';
+import Circle from '../../components/Circle';
+import SmallButton from '../../components/SmallButton';
 
 const LoginScreen = ({navigation}) => {
   const [number, onChangeNumber] = useState('');
@@ -39,6 +47,15 @@ const LoginScreen = ({navigation}) => {
           source={require('../../assets/logos/logo.png')}
         />
       </View>
+      <Text
+        style={{
+          fontWeight: '700',
+          fontSize: 36,
+          color: SOLID_BLACK,
+          marginBottom: '4%',
+        }}>
+        Sign In
+      </Text>
       <View
         style={{
           height: '60%',
@@ -52,7 +69,7 @@ const LoginScreen = ({navigation}) => {
         <View
           style={{
             backgroundColor: '#D9D9D9',
-            width: '94%',
+            width: '90%',
             paddingVertical: '4%',
             borderRadius: 20,
             alignItems: 'center',
@@ -65,43 +82,64 @@ const LoginScreen = ({navigation}) => {
             marginTop: '8%',
             marginBottom: '4%',
           }}>
-          <TextInput
-            style={styles.input}
-            onChangeText={onChangeNumber}
-            value={number}
-            placeholder="Enter Email"
-            keyboardType="numeric"
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={setPassword}
-            value={password}
-            placeholder="Enter Password"
-            secureTextEntry
-          />
+          <View style={styles.row}>
+            <Circle size={33} containerStyle={{backgroundColor: '#E3A4A4'}} />
+            <TextInput
+              style={styles.input}
+              onChangeText={onChangeNumber}
+              value={number}
+              placeholder="Username"
+              placeholderTextColor="#666666"
+              keyboardType="numeric"
+            />
+          </View>
+
+          <Divider space="1%" />
+          <View style={styles.row}>
+            <Circle size={33} containerStyle={{backgroundColor: MID_PURPLE}} />
+            <TextInput
+              style={styles.input}
+              onChangeText={setPassword}
+              value={password}
+              placeholder="Password"
+              placeholderTextColor="#666666"
+              secureTextEntry
+            />
+          </View>
         </View>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('ForgotPassword')}
-          style={{}}>
-          <Text style={{fontSize: 16, color: RED_ERROR, right: 0}}>
-            Forgot Password
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
-          <Text style={{fontSize: 20, fontWeight: 'bold', color: WHITE}}>
-            Login
-          </Text>
-        </TouchableOpacity>
+
+        <SmallButton
+          onPress={handleLogin}
+          title="Sign In"
+          btnStyle={styles.btnStyle}
+          titleStyle={styles.titleStyle}
+        />
+
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={{fontSize: 16, color: PRIMARY_COLOR, right: 0}}>
-            Don't have an account?
-          </Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ForgotPassword')}
+            style={{}}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: '400',
+                color: MID_PURPLE,
+                right: 0,
+              }}>
+              Forgot Password?{' '}
+            </Text>
+          </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => navigation.navigate('SignUpScreen')}
-            style={{alignItems: 'flex-end'}}>
-            <Text style={{fontSize: 18, color: PRIMARY_COLOR, right: 0}}>
-              SignUp
-            </Text>
+            style={{
+              alignItems: 'flex-end',
+              backgroundColor: 'black',
+              borderRadius: 16,
+              paddingVertical: 6,
+              paddingHorizontal: 12,
+            }}>
+            <Text style={{fontSize: 14, color: WHITE, right: 0}}>Sign Up</Text>
           </TouchableOpacity>
         </View>
       </View>

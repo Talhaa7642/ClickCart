@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {PRIMARY_COLOR, WHITE} from '../../utils/colors';
+import {LIGHT_PURPLE, PRIMARY_COLOR, WHITE} from '../../utils/colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -16,8 +16,20 @@ export const styles = StyleSheet.create({
     padding: 10,
     // backgroundColor: WHITE,
     // borderRadius: 22,
-    elevation: 1,
-    borderBottomWidth: 1, borderBottomColor: 'grey'
+  },
+  btnStyle: {
+    width: '40%',
+    marginBottom: '5%',
+    position: 'relative',
+    padding: 14,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
+    backgroundColor: LIGHT_PURPLE,
+  },
+  titleStyle: {
+    color: WHITE,
   },
   loginButton: {
     backgroundColor: PRIMARY_COLOR,
@@ -27,5 +39,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: '4%',
+  },
+  row: {
+    marginLeft: '20%',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

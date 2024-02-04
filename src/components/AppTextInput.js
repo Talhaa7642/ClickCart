@@ -3,12 +3,20 @@ import React from 'react';
 import {GREY_NEUTRAL, SOLID_BLACK, WHITE} from '../utils/colors';
 import SearchSvg from '../assets/Svgs/SearchSvg';
 
-const AppTextInput = ({placeholder, value, onChangeText}) => {
+const AppTextInput = ({
+  hideIcon,
+  placeholder,
+  value,
+  onChangeText,
+  inputStyle,
+}) => {
   return (
-    <View style={[styles.row1, styles.inputContainer]}>
-      <View style={styles.searchIcon}>
-        <SearchSvg />
-      </View>
+    <View style={[styles.row1, styles.inputContainer, inputStyle]}>
+      {hideIcon ? null : (
+        <View style={styles.searchIcon}>
+          <SearchSvg />
+        </View>
+      )}
       <TextInput
         style={styles.input}
         placeholder={placeholder}

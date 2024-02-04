@@ -14,11 +14,29 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import StoreScreen from '../src/screens/Store/StoreScreen';
 import StoreProductsScreen from '../src/screens/StoreProductsScreen/StoreProductsScreen';
 import ProductDetail from '../src/screens/ProductDetail/ProductDetail';
+import CartScreen from '../src/screens/CartScreen/CartScreen';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import CheckoutScreen from '../src/screens/CheckoutScreen/CheckoutScreen';
+import PaymentScreen from '../src/screens/PaymentScreen/PaymentScreen';
+import OrderCompleteScreen from '../src/screens/OrderCompleteScreen/OrderCompleteScreen';
+import OrderIdScreen from '../src/screens/OrderIdScreen/OrderIdScreen';
+
+const Stack = createNativeStackNavigator();
+const CartStack = () => (
+  <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Screen name="CartScreen" component={CartScreen} />
+    <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
+    <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
+    <Stack.Screen name="OrderCompleteScreen" component={OrderCompleteScreen} />
+    <Stack.Screen name="OrderIdScreen" component={OrderIdScreen} />
+  </Stack.Navigator>
+);
 
 const BottomTabNavigator = ({navigation}) => {
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
+      backBehavior="history"
       screenOptions={{
         tabBarShowLabel: false,
       }}>
@@ -73,7 +91,7 @@ const BottomTabNavigator = ({navigation}) => {
       />
 
       <Tab.Screen
-        name="OrderScreen"
+        name="CartStack"
         options={{
           headerShown: false,
           tabBarLabel: 'OrderScreen',
@@ -88,7 +106,7 @@ const BottomTabNavigator = ({navigation}) => {
             />
           ),
         }}
-        component={PreviousServicesScreen}
+        component={CartStack}
       />
 
       <Tab.Screen

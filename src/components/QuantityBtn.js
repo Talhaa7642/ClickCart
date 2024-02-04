@@ -11,7 +11,7 @@ const QuantityBtn = ({onPlusPress, onMinusPress, quantity = 0}) => {
         size={20}
         color={SOLID_BLACK}
         onPress={onMinusPress}
-        style={{paddingHorizontal: 10}}
+        style={{paddingHorizontal: 7}}
       />
       <Text style={styles.qtyTxt}>{quantity}</Text>
       <Entypo
@@ -19,7 +19,7 @@ const QuantityBtn = ({onPlusPress, onMinusPress, quantity = 0}) => {
         size={20}
         color={SOLID_BLACK}
         onPress={onPlusPress}
-        style={{paddingHorizontal: 10}}
+        style={{paddingHorizontal: 7}}
       />
     </View>
   );
@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '30%',
     alignItems: 'center',
     borderRadius: 12,
     borderWidth: 2,
@@ -39,8 +38,7 @@ const styles = StyleSheet.create({
   },
   qtyTxt: {
     backgroundColor: LIGHT_GREY0,
-    paddingVertical: 5,
-    width: 34,
+    width: 30,
     textAlign: 'center',
     fontWeight: '800',
     fontSize: 18,

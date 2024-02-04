@@ -3,9 +3,9 @@ import React from 'react';
 import LeftArrowSvg from '../assets/Svgs/LeftArrowSvg';
 import SearchSvg from '../assets/Svgs/SearchSvg';
 import {useNavigation} from '@react-navigation/native';
-import {BLACK1} from '../utils/colors';
+import {BLACK1, MID_PINK} from '../utils/colors';
 
-const Header = ({title, rightIcon}) => {
+const Header = ({title, rightIcon, rightBtn, rightOnPress}) => {
   const navigation = useNavigation();
   return (
     <View style={styles.header}>
@@ -13,7 +13,15 @@ const Header = ({title, rightIcon}) => {
         <LeftArrowSvg />
       </Pressable>
       <Text style={styles.title}>{title}</Text>
-      {rightIcon ? rightIcon : <View style={{padding: 20}} />}
+      {rightIcon ? (
+        rightIcon
+      ) : rightBtn ? (
+        <View onPress={rightOnPress} style={styles.draftCont}>
+          <Text style={styles.draftTxt}>Save Draft</Text>
+        </View>
+      ) : (
+        <View style={{padding: 20}} />
+      )}
     </View>
   );
 };
@@ -30,5 +38,17 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 20,
     color: BLACK1,
+  },
+  draftCont: {
+    padding: 4,
+    borderRadius: 6,
+    alignSelf: 'flex-start',
+    backgroundColor: '#C494C557',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  draftTxt: {
+    fontSize: 14,
+    color: MID_PINK,
   },
 });

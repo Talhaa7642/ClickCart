@@ -33,6 +33,7 @@ const LoginScreen = ({navigation}) => {
     // } else if (number === 'user' && password === 'user') {
     // }
     navigation.navigate('ScanQRScreen');
+    // navigation.navigate('SellerCenter');
   };
 
   return (

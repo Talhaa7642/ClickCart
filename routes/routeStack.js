@@ -18,6 +18,9 @@ import ForgotPassword from '../src/screens/forgotPassword/forgotPassword';
 import ScanQRScreen from '../src/screens/scanQRCodeScreen/scanQRScreen';
 import CreatePassword from '../src/screens/CreatePassword/CreatePassword';
 import SearchStore from '../src/screens/SearchStore/SearchStore';
+import SellerCenter from '../src/screens/SellerCenter/SellerCenter';
+import AddProduct from '../src/screens/AddProduct/AddProduct';
+import AllProduct from '../src/screens/AllProduct/AllProduct';
 const Stack = createNativeStackNavigator();
 
 export default function RoutesStack() {
@@ -55,6 +58,9 @@ export default function RoutesStack() {
         <Stack.Screen name="CreatePassword" component={CreatePassword} />
         <Stack.Screen name="ScanQRScreen" component={ScanQRScreen} />
         <Stack.Screen name="SearchStore" component={SearchStore} />
+        <Stack.Screen name="SellerCenter" component={SellerCenter} />
+        <Stack.Screen name="AddProduct" component={AddProduct} />
+        <Stack.Screen name="AllProduct" component={AllProduct} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -28,3 +28,5 @@ export const MID_GREEN = '#4CD964';
 export const LIME_GREEN = '#E0FFE5';
 export const LIGHT_PURPLE = '#2D4CEDC9';
 export const DARK_GREY = '#50555C';
+export const BRICK_RED = '#FF0000';
+export const ORANGE = '#FE7D55';

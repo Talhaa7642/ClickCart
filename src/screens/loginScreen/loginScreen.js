@@ -17,9 +17,11 @@ const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loader, setLoader] = useState(false);
 
   const handleLogin = async () => {
     if (email != '' && password != '') {
+      setLoader(true);
       try {
         const cred = await signInWithEmailAndPassword(auth, email, password);
         const userlist = await getDocs(userRef);
@@ -43,6 +45,8 @@ const LoginScreen = ({navigation}) => {
           Toast.SHORT,
           Toast.BOTTOM,
         );
+      } finally {
+        setLoader(false);
       }
     } else {
       Toast.showWithGravity(
@@ -126,6 +130,7 @@ const LoginScreen = ({navigation}) => {
         </View>
 
         <SmallButton
+          loader={loader}
           onPress={handleLogin}
           title="Sign In"
           btnStyle={styles.btnStyle}

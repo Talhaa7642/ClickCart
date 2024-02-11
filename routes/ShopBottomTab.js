@@ -24,6 +24,8 @@ import SellerCenter from '../src/screens/SellerCenter/SellerCenter';
 import AddProduct from '../src/screens/AddProduct/AddProduct';
 import AddStore from '../src/screens/AddStore/AddStore';
 import AllProduct from '../src/screens/AllProduct/AllProduct';
+import {useDispatch} from 'react-redux';
+import {setUser} from '../src/store/features/userSlice';
 
 const Stack = createNativeStackNavigator();
 const CartStack = () => (
@@ -45,8 +47,10 @@ const ProductStack = () => (
   </Stack.Navigator>
 );
 
+const Tab = createBottomTabNavigator();
 const ShopBottomTab = ({navigation}) => {
-  const Tab = createBottomTabNavigator();
+  const dispatch = useDispatch();
+
   return (
     <Tab.Navigator
       backBehavior="history"
@@ -138,6 +142,11 @@ const ShopBottomTab = ({navigation}) => {
             />
           ),
         }}
+        listeners={({navigation, route}) => ({
+          tabPress: e => {
+            if (route.name == 'ProfileScreen') dispatch(setUser(null));
+          },
+        })}
         component={ProfileScreen}
       />
     </Tab.Navigator>

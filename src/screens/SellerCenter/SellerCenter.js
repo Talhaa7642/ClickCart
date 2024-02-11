@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {
   BRICK_RED,
@@ -12,30 +12,30 @@ import {AntDesign, Feather} from '../../utils/icons';
 import Circle from '../../components/Circle';
 import {getDocs} from 'firebase/firestore';
 import {storeRef} from '../../firebase';
+import {useFocusEffect} from '@react-navigation/native';
 
 const SellerCenter = ({navigation}) => {
   const [storeInfo, setStoreInfo] = useState(null);
 
-  useEffect(() => {
-    getDocs(storeRef)
-      .then(snapshot =>
-        setStoreInfo({...snapshot.docs[0].data, id: snapshot.docs[0].id}),
-      )
-      .catch(err => console.log('get store err', err));
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getDocs(storeRef)
+        .then(snapshot =>
+          setStoreInfo({...snapshot.docs[0].data(), id: snapshot.docs[0].id}),
+        )
+        .catch(err => console.log('get store err', err));
+    }, []),
+  );
 
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Seller Center</Text>
 
       <View style={styles.row}>
-        <Image
-          source={require('../../assets/images/bookStore.png')}
-          style={styles.img}
-        />
+        <Image source={{uri: storeInfo?.image}} style={styles.img} />
 
         <View>
-          <Text style={styles.heading}>##ECP</Text>
+          <Text style={styles.heading}>{storeInfo?.name}</Text>
           <Text style={styles.desc}>
             Store link available here after store is active
           </Text>
@@ -52,7 +52,7 @@ const SellerCenter = ({navigation}) => {
 
         <Pressable
           style={styles.capsule}
-          onPress={() => navigation.navigate('AddStore')}>
+          onPress={() => navigation.navigate('AddStore', storeInfo)}>
           <Circle
             size={24}
             containerStyle={{backgroundColor: ORANGE, marginRight: '15%'}}>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import Header from '../../components/Header';
 import AppTextInput from '../../components/AppTextInput';
@@ -12,7 +12,9 @@ import Toast from 'react-native-simple-toast';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import {useSelector} from 'react-redux';
 
-const AddStore = ({navigation}) => {
+const AddStore = ({route}) => {
+  const storeInfo = route.params;
+
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [loader, setLoader] = useState(false);
@@ -25,6 +27,16 @@ const AddStore = ({navigation}) => {
     image,
     setImage,
   } = useMedia();
+
+  useEffect(() => {
+    if (storeInfo) {
+      setName(storeInfo.name);
+      setAddress(storeInfo.address);
+      setImage({
+        uri: storeInfo.image,
+      });
+    }
+  }, []);
 
   const handleSubmit = async () => {
     if (name != '' && address != '' && image.type != '') {
@@ -51,14 +63,6 @@ const AddStore = ({navigation}) => {
         };
 
         await addDoc(storeRef, payload);
-
-        setName('');
-        setAddress('');
-        setImage({
-          name: '',
-          type: '',
-          uri: '',
-        });
 
         Toast.showWithGravity(
           'Store added successfully',
@@ -122,13 +126,15 @@ const AddStore = ({navigation}) => {
         </Pressable>
       </View>
 
-      <SmallButton
-        loader={loader}
-        onPress={handleSubmit}
-        title="Submit"
-        btnStyle={styles.btnStyle}
-        titleStyle={styles.titleStyle}
-      />
+      {storeInfo?.name ? null : (
+        <SmallButton
+          loader={loader}
+          onPress={handleSubmit}
+          title="Submit"
+          btnStyle={styles.btnStyle}
+          titleStyle={styles.titleStyle}
+        />
+      )}
     </View>
   );
 };

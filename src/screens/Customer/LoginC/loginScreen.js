@@ -1,19 +1,34 @@
 import React, {useState} from 'react';
-import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
-import {MID_PURPLE, SOLID_BLACK, WHITE} from '../../utils/colors';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
+import {
+  MID_PURPLE,
+  PRIMARY_COLOR,
+  SOLID_BLACK,
+  WHITE,
+} from '../../utils/colors';
+import Svg, {SvgXml} from 'react-native-svg';
+import {RED_ERROR} from '../../utils/colors';
 import {styles} from './styles';
+import {SPLASH_SCREEN_IMAGE} from '../../utils/assets';
 import LinearGradient from 'react-native-linear-gradient';
 import Divider from '../../components/Divider';
 import Circle from '../../components/Circle';
 import SmallButton from '../../components/SmallButton';
 import {signInWithEmailAndPassword} from 'firebase/auth';
-import {auth, userRef} from '../../firebase';
+import {auth} from '../../firebase';
 import {useDispatch} from 'react-redux';
 import {setUser} from '../../store/features/userSlice';
 import Toast from 'react-native-simple-toast';
-import {getDocs} from 'firebase/firestore';
 
-const LoginScreen = ({navigation}) => {
+const LoginC = ({navigation}) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,34 +37,14 @@ const LoginScreen = ({navigation}) => {
     if (email != '' && password != '') {
       try {
         const cred = await signInWithEmailAndPassword(auth, email, password);
-        const userlist = await getDocs(userRef);
-        let role = '';
-        userlist.docs.forEach(doc => {
-          if (cred.user.uid == doc.data().uid) {
-            role = doc.data().role;
-          }
-        });
-
-        const copyUser = {
-          ...cred.user,
-          role: role,
-        };
-
-        dispatch(setUser(copyUser));
+        dispatch(setUser(cred.user));
       } catch (err) {
-        console.log('login err', err?.message);
         Toast.showWithGravity(
           err?.message.toString(),
           Toast.SHORT,
           Toast.BOTTOM,
         );
       }
-    } else {
-      Toast.showWithGravity(
-        'Please enter email and password',
-        Toast.SHORT,
-        Toast.BOTTOM,
-      );
     }
   };
 
@@ -165,4 +160,4 @@ const LoginScreen = ({navigation}) => {
   );
 };
 
-export default LoginScreen;
+export default LoginC;

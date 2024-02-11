@@ -1,11 +1,19 @@
 import React from 'react';
 import {Pressable, StyleSheet, Text} from 'react-native';
 import {LIGHT_GREY1, SOLID_BLACK} from '../utils/colors';
+import Loader from './Loader';
 
-const SmallButton = ({title, onPress, btnStyle, titleStyle}) => {
+const SmallButton = ({title, onPress, loader, btnStyle, titleStyle}) => {
   return (
-    <Pressable onPress={onPress} style={[styles.container, btnStyle]}>
-      <Text style={[styles.btnTxt, titleStyle]}>{title}</Text>
+    <Pressable
+      onPress={onPress}
+      style={[styles.container, btnStyle]}
+      disabled={loader}>
+      {loader ? (
+        <Loader />
+      ) : (
+        <Text style={[styles.btnTxt, titleStyle]}>{title}</Text>
+      )}
     </Pressable>
   );
 };

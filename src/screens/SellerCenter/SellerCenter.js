@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {
   BRICK_RED,
@@ -10,8 +10,20 @@ import {
 } from '../../utils/colors';
 import {AntDesign, Feather} from '../../utils/icons';
 import Circle from '../../components/Circle';
+import {getDocs} from 'firebase/firestore';
+import {storeRef} from '../../firebase';
 
 const SellerCenter = ({navigation}) => {
+  const [storeInfo, setStoreInfo] = useState(null);
+
+  useEffect(() => {
+    getDocs(storeRef)
+      .then(snapshot =>
+        setStoreInfo({...snapshot.docs[0].data, id: snapshot.docs[0].id}),
+      )
+      .catch(err => console.log('get store err', err));
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Seller Center</Text>
@@ -38,38 +50,16 @@ const SellerCenter = ({navigation}) => {
           today!
         </Text>
 
-        <Pressable style={styles.capsule}>
+        <Pressable
+          style={styles.capsule}
+          onPress={() => navigation.navigate('AddStore')}>
           <Circle
             size={24}
             containerStyle={{backgroundColor: ORANGE, marginRight: '15%'}}>
             <Text>1</Text>
           </Circle>
 
-          <Text style={styles.capTxt}>Add Profile</Text>
-
-          <Feather name="chevron-right" size={30} color={SOLID_BLACK} />
-        </Pressable>
-
-        <Pressable style={styles.capsule}>
-          <Circle
-            size={24}
-            containerStyle={{backgroundColor: ORANGE, marginRight: '15%'}}>
-            <Text>1</Text>
-          </Circle>
-
-          <Text style={styles.capTxt}>Add Address</Text>
-
-          <Feather name="chevron-right" size={30} color={SOLID_BLACK} />
-        </Pressable>
-
-        <Pressable style={styles.capsule}>
-          <Circle
-            size={24}
-            containerStyle={{backgroundColor: ORANGE, marginRight: '15%'}}>
-            <Text>1</Text>
-          </Circle>
-
-          <Text style={styles.capTxt}>Verify ID & Bank</Text>
+          <Text style={styles.capTxt}>Add Store</Text>
 
           <Feather name="chevron-right" size={30} color={SOLID_BLACK} />
         </Pressable>
@@ -80,7 +70,7 @@ const SellerCenter = ({navigation}) => {
           <Circle
             size={24}
             containerStyle={{backgroundColor: ORANGE, marginRight: '15%'}}>
-            <Text>1</Text>
+            <Text>2</Text>
           </Circle>
 
           <Text style={styles.capTxt}>Add Product</Text>

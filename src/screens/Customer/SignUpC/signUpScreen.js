@@ -20,30 +20,15 @@ import {saveItemInAsyncStorage} from '../../utils/asyncStorage';
 import {useDispatch} from 'react-redux';
 import {setUser} from '../../store/features/userSlice';
 import {addDoc} from 'firebase/firestore';
-import DropDown from 'react-native-paper-dropdown';
-import {Surface} from 'react-native-paper';
 
-const SignUpScreen = ({navigation}) => {
+const SignUpC = ({navigation}) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [showDropDown, setShowDropDown] = useState(false);
-  const [role, setRole] = useState('');
-
-  const roleList = [
-    {
-      label: 'Customer',
-      value: 'customer',
-    },
-    {
-      label: 'Shopkeeper',
-      value: 'shopkeeper',
-    },
-  ];
 
   const handleSubmit = async () => {
-    if (email != '' && password != '' && confirmPassword != '' && role != '') {
+    if (email != '' && password != '' && confirmPassword != '') {
       if (password != confirmPassword) {
         Toast.showWithGravity(
           `Password doesn't match`,
@@ -58,12 +43,12 @@ const SignUpScreen = ({navigation}) => {
             password,
           );
 
-          const payload = {
-            uid: cred.user.uid,
-            role: role,
-          };
+          // const payload = {
+          //   uid: cred.user.uid,
+          //   role: 'shopkeeper',
+          // };
 
-          await addDoc(userRef, payload);
+          // await addDoc(userRef, payload);
 
           setEmail('');
           setPassword('');
@@ -71,10 +56,10 @@ const SignUpScreen = ({navigation}) => {
 
           const copyUser = {
             ...cred.user,
-            role: role,
+            role: 'customer',
           };
 
-          dispatch(setUser(copyUser));
+          dispatch(setUser(cred.user));
 
           Toast.showWithGravity(
             'Signup successfully',
@@ -167,21 +152,6 @@ const SignUpScreen = ({navigation}) => {
         />
       </View>
 
-      <View
-        style={{
-          width: '90%',
-          marginBottom: '2%',
-        }}>
-        <DropDown
-          visible={showDropDown}
-          showDropDown={() => setShowDropDown(true)}
-          onDismiss={() => setShowDropDown(false)}
-          value={role}
-          setValue={setRole}
-          list={roleList}
-        />
-      </View>
-
       <TouchableOpacity
         onPress={handleSubmit}
         style={{
@@ -201,4 +171,4 @@ const SignUpScreen = ({navigation}) => {
   );
 };
 
-export default SignUpScreen;
+export default SignUpC;

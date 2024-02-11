@@ -73,10 +73,12 @@ const AddProduct = () => {
   }, []);
 
   const handleAddCategory = () => {
-    if (catList.every(el => el?.label != catName)) {
-      setCatList([...catList, {label: catName, value: catName}]);
+    if (catName != '') {
+      if (catList.every(el => el?.label != catName)) {
+        setCatList([...catList, {label: catName, value: catName}]);
+      }
+      setCatName('');
     }
-    setCatName('');
   };
 
   const handleSubmit = async () => {

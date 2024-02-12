@@ -20,6 +20,7 @@ import CheckoutScreen from '../src/screens/CheckoutScreen/CheckoutScreen';
 import PaymentScreen from '../src/screens/PaymentScreen/PaymentScreen';
 import OrderCompleteScreen from '../src/screens/OrderCompleteScreen/OrderCompleteScreen';
 import OrderIdScreen from '../src/screens/OrderIdScreen/OrderIdScreen';
+import {useSelector} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 const CartStack = () => (
@@ -32,8 +33,24 @@ const CartStack = () => (
   </Stack.Navigator>
 );
 
+const Tab = createBottomTabNavigator();
 const BottomTabNavigator = ({navigation}) => {
-  const Tab = createBottomTabNavigator();
+  const {cart} = useSelector(store => store.cart);
+
+  const [counter, setCounter] = useState(0);
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      cart.map(el => {
+        if (el.quantity >= 1) {
+          setCounter(counter + 1);
+        } else {
+          setCounter(0);
+        }
+      });
+    }
+  }, [cart]);
+
   return (
     <Tab.Navigator
       backBehavior="history"
@@ -105,6 +122,7 @@ const BottomTabNavigator = ({navigation}) => {
               }}
             />
           ),
+          tabBarBadge: cart.length > 0 ? counter : null,
         }}
         component={CartStack}
       />

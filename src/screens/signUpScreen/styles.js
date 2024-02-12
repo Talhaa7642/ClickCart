@@ -1,5 +1,10 @@
 import {StyleSheet} from 'react-native';
-import {PRIMARY_COLOR, SOLID_BLACK, WHITE} from '../../utils/colors';
+import {
+  LIGHT_PURPLE,
+  PRIMARY_COLOR,
+  SOLID_BLACK,
+  WHITE,
+} from '../../utils/colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -25,5 +30,20 @@ export const styles = StyleSheet.create({
   input: {
     flex: 1,
     color: SOLID_BLACK,
+  },
+  btnStyle: {
+    width: '90%',
+    marginBottom: '5%',
+    position: 'relative',
+    padding: 14,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
+    backgroundColor: LIGHT_PURPLE,
+  },
+  titleStyle: {
+    fontWeight: 'bold',
+    color: WHITE,
   },
 });

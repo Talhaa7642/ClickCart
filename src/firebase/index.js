@@ -22,6 +22,7 @@ export const userRef = collection(db, 'users');
 export const storeRef = collection(db, 'stores');
 export const categoryRef = collection(db, 'categories');
 export const productRef = collection(db, 'products');
+export const orderRef = collection(db, 'orders');
 
 getDocs(storeRef)
   .then(snapshot => {

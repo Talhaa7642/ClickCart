@@ -1,9 +1,28 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {BLACK1, MID_YELLOW, WHITE} from '../../utils/colors';
 import Header from '../../components/Header';
+import {getDocs} from 'firebase/firestore';
+import {orderRef} from '../../firebase';
+import {useSelector} from 'react-redux';
 
 const OrderIdScreen = () => {
+  const {user} = useSelector(store => store.user);
+
+  const [orderId, setOrderId] = useState('');
+
+  useEffect(() => {
+    getDocs(orderRef).then(snapshot => {
+      let orderId = '';
+      snapshot.docs.forEach(el => {
+        if (el.data().uid == user.uid && el.data().status == 'pending') {
+          orderId = el.id;
+        }
+      });
+      setOrderId(orderId);
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <Header />
@@ -13,7 +32,9 @@ const OrderIdScreen = () => {
         </View>
 
         <View style={styles.box2}>
-          <Text style={styles.txt2}>123456789</Text>
+          <Text selectable={true} style={styles.txt2}>
+            {orderId}
+          </Text>
         </View>
       </View>
     </View>

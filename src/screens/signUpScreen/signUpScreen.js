@@ -22,6 +22,7 @@ import {setUser} from '../../store/features/userSlice';
 import {addDoc} from 'firebase/firestore';
 import DropDown from 'react-native-paper-dropdown';
 import {Surface} from 'react-native-paper';
+import SmallButton from '../../components/SmallButton';
 
 const SignUpScreen = ({navigation}) => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const SignUpScreen = ({navigation}) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showDropDown, setShowDropDown] = useState(false);
   const [role, setRole] = useState('');
+  const [loader, setLoader] = useState(false);
 
   const roleList = [
     {
@@ -51,6 +53,7 @@ const SignUpScreen = ({navigation}) => {
           Toast.BOTTOM,
         );
       } else {
+        setLoader(true);
         try {
           const cred = await createUserWithEmailAndPassword(
             auth,
@@ -87,6 +90,8 @@ const SignUpScreen = ({navigation}) => {
             Toast.SHORT,
             Toast.BOTTOM,
           );
+        } finally {
+          setLoader(false);
         }
       }
     } else {
@@ -148,6 +153,7 @@ const SignUpScreen = ({navigation}) => {
           value={password}
           placeholder="Password"
           placeholderTextColor={DARK_GREY}
+          secureTextEntry
         />
       </View>
 
@@ -164,6 +170,7 @@ const SignUpScreen = ({navigation}) => {
           value={confirmPassword}
           placeholder="Confirm Password"
           placeholderTextColor={DARK_GREY}
+          secureTextEntry
         />
       </View>
 
@@ -182,21 +189,13 @@ const SignUpScreen = ({navigation}) => {
         />
       </View>
 
-      <TouchableOpacity
+      <SmallButton
+        loader={loader}
         onPress={handleSubmit}
-        style={{
-          backgroundColor: LIGHT_PURPLE,
-          height: '6%',
-          width: '90%',
-          marginVertical: '1%',
-          borderRadius: 8,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <Text style={{fontSize: 20, fontWeight: 'bold', color: WHITE}}>
-          SignUp
-        </Text>
-      </TouchableOpacity>
+        title="SignUp"
+        btnStyle={styles.btnStyle}
+        titleStyle={styles.titleStyle}
+      />
     </LinearGradient>
   );
 };

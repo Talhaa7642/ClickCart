@@ -65,6 +65,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logoutBtn: {
+    position: 'absolute',
+    bottom: 20,
     height: 50,
     width: '100%',
     marginVertical: 6,

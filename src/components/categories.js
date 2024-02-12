@@ -20,7 +20,7 @@ const Categories = props => {
       <TouchableOpacity onPress={props.onPress} style={styles.card}>
         <ImageBackground
           style={styles.categoryImage}
-          source={props.serviceImage}>
+          source={{uri: props.serviceImage}}>
           {props.fav ? (
             <Circle
               size={34}
@@ -29,11 +29,9 @@ const Categories = props => {
             </Circle>
           ) : null}
 
-          <Text style={styles.name}>{props.name}</Text>
+          {/* <Text style={styles.name}>{props.name}</Text> */}
 
-          {props.store ? (
-            <SmallButton title="General Store" onPress={props.onStorePress} />
-          ) : null}
+          <SmallButton title={props.name} onPress={props.onStorePress} />
         </ImageBackground>
       </TouchableOpacity>
       {props.store ? null : (

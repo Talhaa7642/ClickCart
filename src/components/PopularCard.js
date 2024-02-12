@@ -3,18 +3,18 @@ import React from 'react';
 import {MID_YELLOW, SOLID_BLACK, WHITE} from '../utils/colors';
 import SmallButton from './SmallButton';
 
-const PopularCard = ({item, onPress}) => {
+const PopularCard = ({item, onPress, onCartPress}) => {
   return (
     <Pressable style={styles.container} onPress={onPress}>
-      <Image source={item.image} style={styles.img} />
+      <Image source={{uri: item.images[0]}} style={styles.img} />
 
-      <Text style={styles.priceTxt}>RS. 280</Text>
+      <Text style={styles.priceTxt}>RS. {item.price}</Text>
       <Text style={styles.nameTxt}>{item.name}</Text>
       <SmallButton
         titleStyle={styles.titleStyle}
         btnStyle={styles.btnStyle}
         title="Add to Cart"
-        onPress={() => console.log('Cart Press')}
+        onPress={onCartPress}
       />
     </Pressable>
   );

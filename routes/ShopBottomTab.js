@@ -30,11 +30,11 @@ import {setUser} from '../src/store/features/userSlice';
 const Stack = createNativeStackNavigator();
 const CartStack = () => (
   <Stack.Navigator screenOptions={{headerShown: false}}>
-    <Stack.Screen name="CartScreen" component={CartScreen} />
+    {/* <Stack.Screen name="CartScreen" component={CartScreen} /> */}
     <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
-    <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
-    <Stack.Screen name="OrderCompleteScreen" component={OrderCompleteScreen} />
-    <Stack.Screen name="OrderIdScreen" component={OrderIdScreen} />
+    {/* <Stack.Screen name="PaymentScreen" component={PaymentScreen} /> */}
+    {/* <Stack.Screen name="OrderCompleteScreen" component={OrderCompleteScreen} />
+    <Stack.Screen name="OrderIdScreen" component={OrderIdScreen} /> */}
   </Stack.Navigator>
 );
 

@@ -1,5 +1,5 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {BLACK1, MID_YELLOW, RED1, SOLID_BLACK, WHITE} from '../../utils/colors';
 import SmallButton from '../../components/SmallButton';
 import QuantityBtn from '../../components/QuantityBtn';
@@ -8,28 +8,62 @@ import SearchSvg from '../../assets/Svgs/SearchSvg';
 import {AntDesign} from '../../utils/icons';
 import Divider from '../../components/Divider';
 import {Rating} from 'react-native-ratings';
+import {removeCart, setCart} from '../../store/features/cartSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {useCart} from '../../hooks/useCart';
+import {useFocusEffect} from '@react-navigation/native';
 
 const ProductDetail = ({route}) => {
   const item = route.params;
+  const dispatch = useDispatch();
+  const {handleCart} = useCart();
 
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(item.quantity);
 
   const handleIncreament = () => {
     setQty(qty + 1);
   };
+
   const handleDecreament = () => {
-    setQty(qty - 1);
+    if (qty > 0) {
+      setQty(qty - 1);
+    }
   };
+
+  const handleAddToCart = () => {
+    if (qty == 0) {
+      handleCart(item);
+    } else {
+      handleCart(item, qty);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setQty(item.quantity);
+    }, [item]),
+  );
 
   return (
     <View style={styles.container}>
       <Header />
-      <Image source={item.image} style={styles.img} resizeMode="cover" />
+
+      <View>
+        <FlatList
+          horizontal
+          data={item.images}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item}) => (
+            <Image source={{uri: item}} style={styles.img} resizeMode="cover" />
+          )}
+        />
+      </View>
+
       <View style={styles.row}>
         <Text style={styles.nameTxt}>{item.name}</Text>
         <AntDesign name="heart" size={20} color={RED1} />
       </View>
-      <Text style={styles.descTxt}>{item.desc}</Text>
+      <Text style={styles.descTxt}>{item.description}</Text>
 
       <View style={styles.row1}>
         <Rating ratingCount={5} imageSize={20} style={{paddingVertical: 10}} />
@@ -37,7 +71,7 @@ const ProductDetail = ({route}) => {
         <Text style={styles.reviewTxt}>(2,500 reviews)</Text>
       </View>
 
-      <Text style={styles.priceTxt}>Rs. 260</Text>
+      <Text style={styles.priceTxt}>Rs. {item.price}</Text>
       <Divider />
       <View style={{alignSelf: 'flex-end'}}>
         <QuantityBtn
@@ -47,6 +81,7 @@ const ProductDetail = ({route}) => {
         />
       </View>
       <SmallButton
+        onPress={handleAddToCart}
         title="Add to Cart"
         titleStyle={styles.titleStyle}
         btnStyle={styles.btnStyle}
@@ -65,9 +100,9 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
   },
   img: {
-    height: '30%',
-    width: '50%',
-    alignSelf: 'center',
+    height: 200,
+    width: 220,
+    marginRight: 5,
   },
   row: {
     flexDirection: 'row',
@@ -84,6 +119,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 16,
     color: SOLID_BLACK,
+    marginBottom: 10,
   },
   priceTxt: {
     marginTop: 14,

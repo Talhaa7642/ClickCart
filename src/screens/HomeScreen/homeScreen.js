@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {GREY_MID, SOLID_BLACK, WHITE} from '../../utils/colors';
 import Categories from '../../components/categories';
@@ -8,10 +8,14 @@ import MenuSvg from '../../assets/Svgs/MenuSvg';
 import Avatar from '../../components/Avatar';
 import AppTextInput from '../../components/AppTextInput';
 import Circle from '../../components/Circle';
+import {getDocs} from 'firebase/firestore';
+import {categoryRef, storeRef} from '../../firebase';
+import Loader from '../../components/Loader';
 
 const HomeScreen = ({navigation, route}) => {
-  const {location} = route.params || '';
-
+  const [loader, setLoader] = useState(true);
+  const [stores, setStores] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredCategories, setFilteredCategories] = useState(CategoriesArray);
 
@@ -32,9 +36,7 @@ const HomeScreen = ({navigation, route}) => {
   const renderItemH = ({item}) => (
     <ShopsCard
       item={item}
-      onPress={() =>
-        navigation.navigate('ServiceProviderScreen', item.serviceName)
-      }
+      onPress={() => navigation.navigate('ServiceProviderScreen', item.name)}
     />
   );
 
@@ -42,13 +44,40 @@ const HomeScreen = ({navigation, route}) => {
     <Categories
       fav
       name={item.name}
-      serviceName={item.serviceName}
       serviceImage={item.image}
-      onPress={() =>
-        navigation.navigate('ServiceProviderScreen', item.serviceName)
-      }
+      onPress={() => navigation.navigate('StoreProductsScreen', item)}
+      onStorePress={() => navigation.navigate('StoreProductsScreen', item)}
     />
   );
+
+  useEffect(() => {
+    getDocs(storeRef)
+      .then(snapshot => {
+        let stores = [];
+        snapshot.docs.forEach(el => {
+          stores.push({...el.data(), id: el.id});
+        });
+        setStores(stores);
+
+        getDocs(categoryRef)
+          .then(snapshot => {
+            let categories = [];
+            snapshot.docs.forEach(el => {
+              categories.push({...el.data(), id: el.id});
+            });
+            setCategories(categories);
+            setLoader(false);
+          })
+          .catch(err => {
+            console.log('get store err', err);
+            setLoader(false);
+          });
+      })
+      .catch(err => {
+        console.log('get store err', err);
+        setLoader(false);
+      });
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -60,30 +89,35 @@ const HomeScreen = ({navigation, route}) => {
       </View>
 
       <AppTextInput placeholder="Search A Store or Product" />
+      {loader ? (
+        <Loader indicatorStyle={styles.indicator} />
+      ) : (
+        <>
+          <View style={styles.row1}>
+            <Text
+              onPress={() => navigation.navigate('StoreScreen')}
+              style={styles.catTxt}>
+              Categories
+            </Text>
+            <Text style={styles.viewTxt}>view all</Text>
+          </View>
 
-      <View style={styles.row1}>
-        <Text
-          onPress={() => navigation.navigate('StoreScreen')}
-          style={styles.catTxt}>
-          Categories
-        </Text>
-        <Text style={styles.viewTxt}>view all</Text>
-      </View>
+          <FlatList
+            horizontal
+            data={categories}
+            keyExtractor={item => item.id.toString()}
+            renderItem={renderItemH}
+          />
 
-      <FlatList
-        horizontal
-        data={filteredCategories}
-        keyExtractor={item => item.id.toString()}
-        renderItem={renderItemH}
-      />
-
-      <FlatList
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        data={filteredCategories}
-        keyExtractor={item => item.id.toString()}
-        renderItem={renderItemV}
-      />
+          <FlatList
+            numColumns={2}
+            columnWrapperStyle={styles.row}
+            data={stores}
+            keyExtractor={item => item.id.toString()}
+            renderItem={renderItemV}
+          />
+        </>
+      )}
     </View>
   );
 };
@@ -153,5 +187,10 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     // flexDirection: 'row',
     // marginHorizontal: 40,
+  },
+  indicator: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

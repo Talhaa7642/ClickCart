@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   BLACK1,
   GREY_MID,
@@ -14,8 +14,62 @@ import Divider from '../../components/Divider';
 import SmallButton from '../../components/SmallButton';
 import {W_WIDTH} from '../../utils/dimensions';
 import AppTextInput from '../../components/AppTextInput';
+import {addDoc} from 'firebase/firestore';
+import {orderRef} from '../../firebase';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  setAddress,
+  setOrderTotal,
+  updateCart,
+} from '../../store/features/cartSlice';
 
 const PaymentScreen = ({navigation}) => {
+  const dispatch = useDispatch();
+  const {user} = useSelector(store => store.user);
+  const {cart, address, orderTotal} = useSelector(store => store.cart);
+
+  const [loader, setLoader] = useState(false);
+  const [orderData, setOrderData] = useState([]);
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      let arr = cart.map(el => {
+        if (el.quantity > 0) {
+          return el;
+        }
+      });
+      setOrderData(arr);
+    }
+  }, [cart]);
+
+  const handleSubmit = async () => {
+    setLoader(true);
+    try {
+      let payload = {
+        uid: user.uid,
+        email: user.email,
+        status: 'pending',
+        orderTotal,
+        shippingAddress: address,
+        cart: JSON.stringify(orderData),
+      };
+
+      await addDoc(orderRef, payload);
+
+      dispatch(updateCart([]));
+      dispatch(setAddress(''));
+      dispatch(setOrderTotal(0));
+
+      setTimeout(() => {
+        navigation.replace('OrderCompleteScreen');
+      }, 250);
+    } catch (error) {
+      console.log('order err', error);
+    } finally {
+      setLoader(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Header />
@@ -38,7 +92,8 @@ const PaymentScreen = ({navigation}) => {
           </Text>
           <AppTextInput hideIcon inputStyle={{marginVertical: '10%'}} />
           <SmallButton
-            onPress={() => navigation.navigate('OrderCompleteScreen')}
+            loader={loader}
+            onPress={handleSubmit}
             title="Continue"
             btnStyle={styles.btnStyle3}
             titleStyle={styles.titleStyle}

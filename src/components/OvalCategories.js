@@ -7,10 +7,10 @@ const OvalCategories = ({item, onPress}) => {
     <Pressable onPress={onPress} style={styles.container}>
       <ImageBackground
         style={styles.image}
-        source={item.image}
+        source={item?.image}
         resizeMode="cover"
       />
-      <Text style={styles.name}>{item.serviceName}</Text>
+      <Text style={styles.name}>{item.name}</Text>
     </Pressable>
   );
 };

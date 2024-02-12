@@ -1,5 +1,5 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {CategoriesArray} from '../../utils/constants';
 import CartCard from '../../components/CartCard';
 import {
@@ -13,18 +13,37 @@ import Header from '../../components/Header';
 import SearchSvg from '../../assets/Svgs/SearchSvg';
 import SmallButton from '../../components/SmallButton';
 import {W_WIDTH} from '../../utils/dimensions';
+import {useDispatch, useSelector} from 'react-redux';
+import {setOrderTotal} from '../../store/features/cartSlice';
 
 const CartScreen = ({navigation}) => {
+  const dispatch = useDispatch();
+  const {cart, orderTotal} = useSelector(store => store.cart);
   const [filteredCategories, setFilteredCategories] = useState(CategoriesArray);
+  const [total, setTotal] = useState(orderTotal);
 
-  const renderItem = ({item}) => <CartCard item={item} />;
+  const renderItem = ({item}) =>
+    item.quantity == 0 ? null : <CartCard item={item} />;
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      let total = 0;
+      cart.map(el => {
+        if (el.quantity >= 1) {
+          total += el.quantity * parseInt(el.price);
+        }
+      });
+      setTotal(total);
+      dispatch(setOrderTotal(total));
+    }
+  }, [cart]);
 
   return (
     <View style={styles.container}>
       <Header title="My Cart" rightIcon={<SearchSvg />} />
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={filteredCategories}
+        data={cart}
         keyExtractor={item => item.id.toString()}
         renderItem={renderItem}
       />
@@ -32,7 +51,7 @@ const CartScreen = ({navigation}) => {
       <View style={styles.bottomContainer}>
         <View style={{flex: 1}}>
           <Text style={styles.price1Txt}>Total Price</Text>
-          <Text style={styles.price2Txt}>Rs 1300</Text>
+          <Text style={styles.price2Txt}>Rs {total}</Text>
         </View>
 
         <SmallButton

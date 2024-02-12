@@ -14,22 +14,15 @@ import {styles} from './styles';
 import Categories from '../../components/categories';
 import {CategoriesArray} from '../../utils/constants';
 import ServiceProviderDetails from '../../components/serviceProvider';
+import {useDispatch, useSelector} from 'react-redux';
+import {setUser} from '../../store/features/userSlice';
+
 const ProfileScreen = ({route, navigation}) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filteredCategories, setFilteredCategories] = useState(CategoriesArray);
+  const dispatch = useDispatch();
+  const {user} = useSelector(store => store.user);
 
-  const handleSearch = query => {
-    setSearchQuery(query);
-
-    const filtered = CategoriesArray.filter(category =>
-      category.serviceName.toLowerCase().includes(query.toLowerCase()),
-    );
-
-    setFilteredCategories(filtered);
-  };
-
-  const navigateToServiceProviderScreen = () => {
-    navigation.navigate('ProviderDescriptionScreen');
+  const handleLogout = () => {
+    dispatch(setUser(null));
   };
 
   return (
@@ -47,22 +40,10 @@ const ProfileScreen = ({route, navigation}) => {
             style={styles.profilePic}
             source={require('../../assets/images/personIcon.png')}
           />
-          <Text style={styles.userName}>User Name </Text>
+          <Text style={styles.userName}>{user.email}</Text>
         </View>
       </View>
-      <View style={styles.profileFields}>
-        <Text style={styles.leftText}>Name: </Text>
-        <Text style={styles.rightText}>Talha Shabbir </Text>
-      </View>
-      <View style={styles.profileFields}>
-        <Text style={styles.leftText}>Phone no.: </Text>
-        <Text style={styles.rightText}>03202919700 </Text>
-      </View>
 
-      <View style={styles.profileFields}>
-        <Text style={styles.leftText}>Location: </Text>
-        <Text style={styles.rightText}>Gulshan-e-ravi Lahore</Text>
-      </View>
       <TouchableOpacity style={styles.editProfile}>
         <Text
           style={{
@@ -74,42 +55,9 @@ const ProfileScreen = ({route, navigation}) => {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.editProfile}>
-        <Text
-          style={{
-            fontSize: 18,
-
-            // textAlign: 'center',
-            color: PRIMARY_COLOR,
-          }}>
-          Customer Support
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.editProfile}>
-        <Text
-          style={{
-            ...styles.leftText,
-            textAlign: 'center',
-            color: PRIMARY_COLOR,
-          }}>
-          Terms and Conditions
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.editProfile}>
-        <Text
-          style={{
-            ...styles.leftText,
-            textAlign: 'center',
-            color: PRIMARY_COLOR,
-          }}>
-          EditProfile
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('LoginScreen')}
-        style={styles.logoutBtn}>
+      <TouchableOpacity onPress={handleLogout} style={styles.logoutBtn}>
         <Text style={{...styles.leftText, textAlign: 'center', color: WHITE}}>
-          LogOut
+          Logout
         </Text>
       </TouchableOpacity>
       <Text

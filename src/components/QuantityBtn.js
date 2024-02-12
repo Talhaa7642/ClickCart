@@ -2,25 +2,32 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {LIGHT_GREY0, SOLID_BLACK} from '../utils/colors';
 import {Entypo} from '../utils/icons';
+import {useSelector} from 'react-redux';
 
 const QuantityBtn = ({onPlusPress, onMinusPress, quantity = 0}) => {
+  const {user} = useSelector(store => store.user);
   return (
-    <View style={styles.container}>
-      <Entypo
-        name="minus"
-        size={20}
-        color={SOLID_BLACK}
-        onPress={onMinusPress}
-        style={{paddingHorizontal: 7}}
-      />
+    <View
+      style={[styles.container, user.role == 'shopkeeper' && {borderWidth: 0}]}>
+      {user.role == 'shopkeeper' ? null : (
+        <Entypo
+          name="minus"
+          size={20}
+          color={SOLID_BLACK}
+          onPress={onMinusPress}
+          style={{paddingHorizontal: 7}}
+        />
+      )}
       <Text style={styles.qtyTxt}>{quantity}</Text>
-      <Entypo
-        name="plus"
-        size={20}
-        color={SOLID_BLACK}
-        onPress={onPlusPress}
-        style={{paddingHorizontal: 7}}
-      />
+      {user.role == 'shopkeeper' ? null : (
+        <Entypo
+          name="plus"
+          size={20}
+          color={SOLID_BLACK}
+          onPress={onPlusPress}
+          style={{paddingHorizontal: 7}}
+        />
+      )}
     </View>
   );
 };

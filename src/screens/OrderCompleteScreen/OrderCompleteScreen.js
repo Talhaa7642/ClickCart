@@ -17,8 +17,6 @@ import {Rating} from 'react-native-ratings';
 const OrderCompleteScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Header />
-
       <View style={styles.topContainer}>
         <View style={styles.circle1}>
           <View style={styles.circle2}>
@@ -39,7 +37,7 @@ const OrderCompleteScreen = ({navigation}) => {
         titleStyle={styles.titleStyle}
         btnStyle={styles.btnStyle1}
       />
-      <SmallButton
+      {/* <SmallButton
         title="Review"
         titleStyle={[styles.titleStyle, {color: SOLID_BLACK}]}
         btnStyle={styles.btnStyle2}
@@ -50,7 +48,7 @@ const OrderCompleteScreen = ({navigation}) => {
         imageSize={30}
         tintColor={LIGHT_PURPLE}
         style={styles.rating}
-      />
+      /> */}
     </View>
   );
 };

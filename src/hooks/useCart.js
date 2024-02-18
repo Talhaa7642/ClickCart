@@ -18,7 +18,7 @@ export const useCart = () => {
           return el;
         }
       });
-      console.log('copyCart', copyCart);
+
       dispatch(updateCart(copyCart));
     } else {
       let payload = {

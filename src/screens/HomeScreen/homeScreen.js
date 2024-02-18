@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {GREY_MID, SOLID_BLACK, WHITE} from '../../utils/colors';
 import Categories from '../../components/categories';
-import {CategoriesArray} from '../../utils/constants';
 import ShopsCard from '../../components/ShopsCard';
 import MenuSvg from '../../assets/Svgs/MenuSvg';
 import Avatar from '../../components/Avatar';
@@ -16,22 +15,8 @@ const HomeScreen = ({navigation, route}) => {
   const [loader, setLoader] = useState(true);
   const [stores, setStores] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filteredCategories, setFilteredCategories] = useState(CategoriesArray);
-
-  const handleSearch = query => {
-    setSearchQuery(query);
-
-    const filtered = CategoriesArray.filter(category =>
-      category.serviceName.toLowerCase().includes(query.toLowerCase()),
-    );
-
-    setFilteredCategories(filtered);
-  };
-
-  const navigateToServiceProviderScreen = () => {
-    navigation.navigate('ServiceProviderScreen', {});
-  };
+  const [query, setQuery] = useState('');
+  const [filteredStores, setFilteredStores] = useState([]);
 
   const renderItemH = ({item}) => (
     <ShopsCard
@@ -58,6 +43,7 @@ const HomeScreen = ({navigation, route}) => {
           stores.push({...el.data(), id: el.id});
         });
         setStores(stores);
+        setFilteredStores(stores);
 
         getDocs(categoryRef)
           .then(snapshot => {
@@ -79,16 +65,35 @@ const HomeScreen = ({navigation, route}) => {
       });
   }, []);
 
+  useEffect(() => {
+    if (query.length >= 2) {
+      let filtered = stores.filter(el => {
+        if (el.name.toLowerCase().includes(query.toLowerCase())) return el;
+      });
+
+      setFilteredStores(filtered);
+    } else {
+      setFilteredStores([]);
+    }
+  }, [query]);
+
   return (
     <View style={styles.container}>
       <View style={styles.row1}>
         <Circle>
           <MenuSvg />
         </Circle>
-        <Avatar uri={require('../../assets/images/carpenter.png')} />
+        <Avatar
+          uri={require('../../assets/images/carpenter.png')}
+          onPress={() => navigation.navigate('ProfileScreen')}
+        />
       </View>
 
-      <AppTextInput placeholder="Search A Store or Product" />
+      <AppTextInput
+        placeholder="Search A Store or Product"
+        value={query}
+        onChangeText={setQuery}
+      />
       {loader ? (
         <Loader indicatorStyle={styles.indicator} />
       ) : (
@@ -109,13 +114,23 @@ const HomeScreen = ({navigation, route}) => {
             renderItem={renderItemH}
           />
 
-          <FlatList
-            numColumns={2}
-            columnWrapperStyle={styles.row}
-            data={stores}
-            keyExtractor={item => item.id.toString()}
-            renderItem={renderItemV}
-          />
+          {filteredStores.length > 0 ? (
+            <FlatList
+              numColumns={2}
+              columnWrapperStyle={styles.row}
+              data={filteredStores}
+              keyExtractor={item => item.id.toString()}
+              renderItem={renderItemV}
+            />
+          ) : (
+            <FlatList
+              numColumns={2}
+              columnWrapperStyle={styles.row}
+              data={stores}
+              keyExtractor={item => item.id.toString()}
+              renderItem={renderItemV}
+            />
+          )}
         </>
       )}
     </View>

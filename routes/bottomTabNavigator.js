@@ -37,17 +37,17 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigator = ({navigation}) => {
   const {cart} = useSelector(store => store.cart);
 
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState([]);
 
   useEffect(() => {
     if (cart.length > 0) {
+      let counter = [];
       cart.map(el => {
         if (el.quantity >= 1) {
-          setCounter(counter + 1);
-        } else {
-          setCounter(0);
+          counter.push(el);
         }
       });
+      setCounter(counter);
     }
   }, [cart]);
 
@@ -122,7 +122,7 @@ const BottomTabNavigator = ({navigation}) => {
               }}
             />
           ),
-          tabBarBadge: cart.length > 0 ? counter : null,
+          tabBarBadge: counter.length > 0 ? counter.length : null,
         }}
         component={CartStack}
       />

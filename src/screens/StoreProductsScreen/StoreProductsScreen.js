@@ -20,6 +20,7 @@ import {useCart} from '../../hooks/useCart';
 import {useDispatch, useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
 import {updateCart} from '../../store/features/cartSlice';
+import Toast from 'react-native-simple-toast';
 
 const StoreProductsScreen = ({navigation, route}) => {
   const storeInfo = route.params;
@@ -27,18 +28,20 @@ const StoreProductsScreen = ({navigation, route}) => {
   const {handleCart} = useCart();
   const {cart} = useSelector(store => store.cart);
 
+  const [query, setQuery] = useState('');
   const [loader, setLoader] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [filteredCategories, setFilteredCategories] = useState(CategoriesArray);
+  const [filteredItems, setFilteredItems] = useState([]);
 
   const renderItem = ({item}) => <OvalCategories item={item} />;
 
   const renderProductItem = ({item}) => (
     <PopularCard
       item={item}
-      onCartPress={() =>
-        handleCart(item, item.quantity == 0 ? 1 : item.quantity + 1)
-      }
+      onCartPress={() => {
+        handleCart(item, item.quantity == 0 ? 1 : item.quantity + 1);
+        Toast.show('Product added to cart successfully');
+      }}
       onPress={() => navigation.navigate('ProductDetail', item)}
     />
   );
@@ -76,6 +79,18 @@ const StoreProductsScreen = ({navigation, route}) => {
       });
   }, [storeInfo]);
 
+  useEffect(() => {
+    if (query.length >= 2) {
+      let filtered = cart.filter(el => {
+        if (el.name.toLowerCase().includes(query.toLowerCase())) return el;
+      });
+
+      setFilteredItems(filtered);
+    } else {
+      setFilteredItems([]);
+    }
+  }, [query]);
+
   return (
     <View style={styles.container}>
       <View style={styles.row1}>
@@ -97,12 +112,16 @@ const StoreProductsScreen = ({navigation, route}) => {
         <Image
           source={{uri: storeInfo.image}}
           style={styles.img}
-          resizeMode="stretch"
+          resizeMode="cover"
         />
         <Text style={styles.storeTxt}>{storeInfo.name}</Text>
       </View>
 
-      <AppTextInput placeholder="Search Products and Categories" />
+      <AppTextInput
+        placeholder="Search Products and Categories"
+        value={query}
+        onChangeText={setQuery}
+      />
       {loader ? (
         <Loader indicatorStyle={styles.indicator} />
       ) : (
@@ -123,13 +142,23 @@ const StoreProductsScreen = ({navigation, route}) => {
 
           <Text style={styles.popularTxt}>Popular Products</Text>
 
-          <FlatList
-            numColumns={2}
-            columnWrapperStyle={styles.row}
-            data={cart}
-            keyExtractor={item => item.id.toString()}
-            renderItem={renderProductItem}
-          />
+          {filteredItems.length > 0 ? (
+            <FlatList
+              numColumns={2}
+              columnWrapperStyle={styles.row}
+              data={filteredItems}
+              keyExtractor={item => item.id.toString()}
+              renderItem={renderProductItem}
+            />
+          ) : (
+            <FlatList
+              numColumns={2}
+              columnWrapperStyle={styles.row}
+              data={cart}
+              keyExtractor={item => item.id.toString()}
+              renderItem={renderProductItem}
+            />
+          )}
         </>
       )}
     </View>

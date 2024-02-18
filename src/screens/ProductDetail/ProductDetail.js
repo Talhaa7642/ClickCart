@@ -12,6 +12,7 @@ import {removeCart, setCart} from '../../store/features/cartSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import {useCart} from '../../hooks/useCart';
 import {useFocusEffect} from '@react-navigation/native';
+import Toast from 'react-native-simple-toast';
 
 const ProductDetail = ({route}) => {
   const item = route.params;
@@ -32,9 +33,10 @@ const ProductDetail = ({route}) => {
 
   const handleAddToCart = () => {
     if (qty == 0) {
-      handleCart(item);
+      Toast.show('Please add at least one product');
     } else {
       handleCart(item, qty);
+      Toast.show('Product added to cart successfully');
     }
   };
 
@@ -64,12 +66,6 @@ const ProductDetail = ({route}) => {
         <AntDesign name="heart" size={20} color={RED1} />
       </View>
       <Text style={styles.descTxt}>{item.description}</Text>
-
-      <View style={styles.row1}>
-        <Rating ratingCount={5} imageSize={20} style={{paddingVertical: 10}} />
-        <Text style={styles.ratingTxt}>4.5</Text>
-        <Text style={styles.reviewTxt}>(2,500 reviews)</Text>
-      </View>
 
       <Text style={styles.priceTxt}>Rs. {item.price}</Text>
       <Divider />

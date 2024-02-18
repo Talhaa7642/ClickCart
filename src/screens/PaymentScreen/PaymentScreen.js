@@ -33,11 +33,8 @@ const PaymentScreen = ({navigation}) => {
 
   useEffect(() => {
     if (cart.length > 0) {
-      let arr = cart.map(el => {
-        if (el.quantity > 0) {
-          return el;
-        }
-      });
+      let arr = cart.filter(el => el.quantity > 0);
+      console.log('arr', arr);
       setOrderData(arr);
     }
   }, [cart]);

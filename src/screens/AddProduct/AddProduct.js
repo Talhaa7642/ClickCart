@@ -125,6 +125,7 @@ const AddProduct = () => {
         }
 
         const proPayload = {
+          storeId,
           parentId: catRes.id,
           name,
           price,

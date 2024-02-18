@@ -27,6 +27,7 @@ import AllProduct from '../src/screens/AllProduct/AllProduct';
 import AddStore from '../src/screens/AddStore/AddStore';
 import {useSelector} from 'react-redux';
 import ShopBottomTab from './ShopBottomTab';
+import Providers from '../src/screens/Providers/Providers';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,12 @@ const AuthStack = () => (
     <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
     <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
     <Stack.Screen name="CreatePassword" component={CreatePassword} />
+  </Stack.Navigator>
+);
+
+const AdminStack = () => (
+  <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Screen name="Providers" component={Providers} />
   </Stack.Navigator>
 );
 
@@ -79,12 +86,14 @@ const RootStack = () => {
 
 const Route = () => {
   const {user} = useSelector(store => store.user);
-
+  console.log('user', user?.role);
   const renderRoute = () => {
     if (user && user?.role == 'shopkeeper') {
       return <ShopStack />;
     } else if (user && user?.role == 'customer') {
       return <RootStack />;
+    } else if (user && user?.role == 'admin') {
+      return <AdminStack />;
     } else {
       return <AuthStack />;
     }

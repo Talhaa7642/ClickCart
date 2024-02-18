@@ -13,16 +13,22 @@ import Circle from '../../components/Circle';
 import {getDocs} from 'firebase/firestore';
 import {storeRef} from '../../firebase';
 import {useFocusEffect} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 const SellerCenter = ({navigation}) => {
+  const {user} = useSelector(state => state.user);
   const [storeInfo, setStoreInfo] = useState(null);
 
   useFocusEffect(
     React.useCallback(() => {
       getDocs(storeRef)
-        .then(snapshot =>
-          setStoreInfo({...snapshot.docs[0].data(), id: snapshot.docs[0].id}),
-        )
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            if (doc.data().uid == user.uid) {
+              setStoreInfo({...doc.data(), id: doc.id});
+            }
+          });
+        })
         .catch(err => console.log('get store err', err));
     }, []),
   );

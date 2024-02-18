@@ -25,6 +25,7 @@ import ShopsCard from '../../components/ShopsCard';
 
 const StoreProductsScreen = ({navigation, route}) => {
   const storeInfo = route.params;
+  console.log('storeInfo', storeInfo);
   const dispatch = useDispatch();
   const {handleCart} = useCart();
   const {cart} = useSelector(store => store.cart);
@@ -55,10 +56,12 @@ const StoreProductsScreen = ({navigation, route}) => {
         let categories = [];
 
         snapshot.docs.forEach(el => {
-          if (el.data().parentId == storeInfo.id)
+          if (el.data().parentId == storeInfo.id) {
             categories.push({...el.data(), id: el.id});
+          }
         });
         categories.push({name: 'All', id: Math.random()});
+        console.log('categories', categories);
         setCategories(categories);
 
         getDocs(productRef)

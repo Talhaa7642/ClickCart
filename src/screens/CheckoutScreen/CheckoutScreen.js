@@ -8,7 +8,6 @@ import {
   WHITE,
 } from '../../utils/colors';
 import Header from '../../components/Header';
-import {CategoriesArray} from '../../utils/constants';
 import CartCard from '../../components/CartCard';
 import SmallButton from '../../components/SmallButton';
 import Circle from '../../components/Circle';
@@ -18,14 +17,14 @@ import {setAddress} from '../../store/features/cartSlice';
 import {doc, onSnapshot, updateDoc} from 'firebase/firestore';
 import {db, orderRef} from '../../firebase';
 import Loader from '../../components/Loader';
+import Toast from 'react-native-simple-toast';
 
 const CheckoutScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const {user} = useSelector(store => store.user);
   const {cart, address} = useSelector(store => store.cart);
 
-  const [filteredCategories, setFilteredCategories] = useState(CategoriesArray);
-  const [shipAddress, setShipAddress] = useState(address);
+  const [shipAddress, setShipAddress] = useState('');
   const [orders, setOrders] = useState([]);
   const [loader1, setLoader1] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -39,7 +38,6 @@ const CheckoutScreen = ({navigation}) => {
       let orders = [];
       snapshot.docs.forEach(el => {
         if (el.data().status == 'pending') {
-          console.log('pending', el.data().carts);
           orders.push({
             ...el.data(),
             cart: JSON.parse(el.data().cart),
@@ -47,16 +45,24 @@ const CheckoutScreen = ({navigation}) => {
           });
         }
       });
-      setShipAddress(orders[0]?.shippingAddress);
-      setOrders(orders);
+
+      if (orders.length > 0 && orders[0]?.shippingAddress != undefined) {
+        setShipAddress(orders[0]?.shippingAddress);
+        setOrders(orders);
+      }
+
       setLoader1(false);
     });
   }, []);
 
   const handleNavigate = () => {
-    dispatch(setAddress(shipAddress));
+    if (shipAddress == '') {
+      Toast.show('Please add shipping address');
+    } else {
+      dispatch(setAddress(shipAddress));
 
-    navigation.navigate('PaymentScreen');
+      navigation.navigate('PaymentScreen');
+    }
   };
 
   const handleAllowOrder = async () => {
@@ -75,7 +81,7 @@ const CheckoutScreen = ({navigation}) => {
       <Header title="Checkout" rightIcon={null} />
       {loader1 ? (
         <Loader indicatorStyle={styles.indicator} />
-      ) : orders.length == 0 ? (
+      ) : user.role != 'customer' && orders.length == 0 ? (
         <Text style={styles.txt1}>No order found</Text>
       ) : (
         <>

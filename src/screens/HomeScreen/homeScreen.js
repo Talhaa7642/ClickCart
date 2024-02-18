@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Pressable} from 'react-native';
 import {GREY_MID, SOLID_BLACK, WHITE} from '../../utils/colors';
 import Categories from '../../components/categories';
 import ShopsCard from '../../components/ShopsCard';
@@ -18,12 +18,7 @@ const HomeScreen = ({navigation, route}) => {
   const [query, setQuery] = useState('');
   const [filteredStores, setFilteredStores] = useState([]);
 
-  const renderItemH = ({item}) => (
-    <ShopsCard
-      item={item}
-      onPress={() => navigation.navigate('ServiceProviderScreen', item.name)}
-    />
-  );
+  const renderItemH = ({item}) => <ShopsCard item={item} />;
 
   const renderItemV = ({item}) => (
     <Categories
@@ -98,14 +93,12 @@ const HomeScreen = ({navigation, route}) => {
         <Loader indicatorStyle={styles.indicator} />
       ) : (
         <>
-          <View style={styles.row1}>
-            <Text
-              onPress={() => navigation.navigate('StoreScreen')}
-              style={styles.catTxt}>
-              Categories
-            </Text>
+          <Pressable
+            style={styles.row1}
+            onPress={() => navigation.navigate('StoreScreen')}>
+            <Text style={styles.catTxt}>Categories</Text>
             <Text style={styles.viewTxt}>view all</Text>
-          </View>
+          </Pressable>
 
           <FlatList
             horizontal

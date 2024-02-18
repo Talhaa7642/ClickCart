@@ -21,6 +21,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
 import {updateCart} from '../../store/features/cartSlice';
 import Toast from 'react-native-simple-toast';
+import ShopsCard from '../../components/ShopsCard';
 
 const StoreProductsScreen = ({navigation, route}) => {
   const storeInfo = route.params;
@@ -33,7 +34,9 @@ const StoreProductsScreen = ({navigation, route}) => {
   const [categories, setCategories] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
 
-  const renderItem = ({item}) => <OvalCategories item={item} />;
+  const renderItem = ({item}) => (
+    <ShopsCard item={item} onPress={() => handleFilterByCategory(item.name)} />
+  );
 
   const renderProductItem = ({item}) => (
     <PopularCard
@@ -55,7 +58,7 @@ const StoreProductsScreen = ({navigation, route}) => {
           if (el.data().parentId == storeInfo.id)
             categories.push({...el.data(), id: el.id});
         });
-
+        categories.push({name: 'All', id: Math.random()});
         setCategories(categories);
 
         getDocs(productRef)
@@ -90,6 +93,17 @@ const StoreProductsScreen = ({navigation, route}) => {
       setFilteredItems([]);
     }
   }, [query]);
+
+  const handleFilterByCategory = cat => {
+    if (cat == 'All') {
+      setFilteredItems([]);
+    } else {
+      let filtered = cart.filter(el => {
+        if (el.category.includes(cat)) return el;
+      });
+      setFilteredItems(filtered);
+    }
+  };
 
   return (
     <View style={styles.container}>

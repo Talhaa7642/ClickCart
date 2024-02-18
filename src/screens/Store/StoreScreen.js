@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import AppTextInput from '../../components/AppTextInput';
 import {MID_BLUE} from '../../utils/colors';
-import {CategoriesArray} from '../../utils/constants';
 import Categories from '../../components/categories';
 import {getDocs} from 'firebase/firestore';
 import {storeRef} from '../../firebase';
@@ -11,7 +10,8 @@ import Loader from '../../components/Loader';
 const StoreScreen = ({navigation}) => {
   const [loader, setLoader] = useState(true);
   const [stores, setStores] = useState([]);
-  const [filteredCategories, setFilteredCategories] = useState(CategoriesArray);
+  const [query, setQuery] = useState('');
+  const [filteredItems, setFilteredItems] = useState([]);
 
   const renderItemV = ({item}) => (
     <Categories
@@ -40,22 +40,48 @@ const StoreScreen = ({navigation}) => {
       });
   }, []);
 
+  useEffect(() => {
+    if (query.length >= 2) {
+      let filtered = stores.filter(el => {
+        if (el.name.toLowerCase().includes(query.toLowerCase())) return el;
+      });
+
+      setFilteredItems(filtered);
+    } else {
+      setFilteredItems([]);
+    }
+  }, [query]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Categories</Text>
 
-      <AppTextInput placeholder="Search A Store or Product" />
+      <AppTextInput
+        placeholder="Search A Store or Product"
+        value={query}
+        onChangeText={setQuery}
+      />
       {loader ? (
         <Loader indicatorStyle={styles.indicator} />
       ) : (
         <>
-          <FlatList
-            numColumns={2}
-            columnWrapperStyle={styles.row}
-            data={stores}
-            keyExtractor={item => item.id.toString()}
-            renderItem={renderItemV}
-          />
+          {filteredItems.length > 0 ? (
+            <FlatList
+              numColumns={2}
+              columnWrapperStyle={styles.row}
+              data={filteredItems}
+              keyExtractor={item => item.id.toString()}
+              renderItem={renderItemV}
+            />
+          ) : (
+            <FlatList
+              numColumns={2}
+              columnWrapperStyle={styles.row}
+              data={stores}
+              keyExtractor={item => item.id.toString()}
+              renderItem={renderItemV}
+            />
+          )}
         </>
       )}
     </View>

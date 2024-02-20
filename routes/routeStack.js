@@ -18,7 +18,6 @@ import AddLocation from '../src/screens/AddLocation/addLocation';
 import BookingScreen from '../src/screens/AdminSide/BookingReq/bookingReq';
 import AddProviders from '../src/screens/AdminSide/AddProviders/addProviders';
 import ForgotPassword from '../src/screens/forgotPassword/forgotPassword';
-import ScanQRScreen from '../src/screens/scanQRCodeScreen/scanQRScreen';
 import CreatePassword from '../src/screens/CreatePassword/CreatePassword';
 import SearchStore from '../src/screens/SearchStore/SearchStore';
 import SellerCenter from '../src/screens/SellerCenter/SellerCenter';
@@ -28,6 +27,9 @@ import AddStore from '../src/screens/AddStore/AddStore';
 import {useSelector} from 'react-redux';
 import ShopBottomTab from './ShopBottomTab';
 import Providers from '../src/screens/Providers/Providers';
+import QRCodeGenerator from '../src/screens/GenerateQRCode/GenerateQRCode';
+import SearchOrScan from '../src/screens/SearchOrScan/searchOrScan';
+import { ScanScreen } from '../src/screens/QRScanScreen/QRScanScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +51,7 @@ const AdminStack = () => (
 
 const ShopStack = () => (
   <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Screen name="QRCodeGenerator" component={QRCodeGenerator} />
     <Stack.Screen name="ShopBottomTab" component={ShopBottomTab} />
   </Stack.Navigator>
 );
@@ -57,6 +60,8 @@ const RootStack = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Splash" component={SplashScreen} />
+      <Stack.Screen name="SearchOrScan" component={SearchOrScan} />
+      <Stack.Screen name="ScanScreen" component={ScanScreen} />
       <Stack.Screen name="AddLocation" component={AddLocation} />
 
       <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
@@ -78,7 +83,6 @@ const RootStack = () => {
       <Stack.Screen name="BookingScreen" component={BookingScreen} />
       <Stack.Screen name="AddServices" component={AddServices} />
       <Stack.Screen name="AddProviders" component={AddProviders} />
-      <Stack.Screen name="ScanQRScreen" component={ScanQRScreen} />
       <Stack.Screen name="SearchStore" component={SearchStore} />
     </Stack.Navigator>
   );

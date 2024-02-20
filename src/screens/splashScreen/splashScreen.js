@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 
 // import all the components we are going to use
 import {View, StyleSheet} from 'react-native';
@@ -12,7 +12,7 @@ const SplashScreen = ({navigation}) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (user) navigation.navigate('BottomTabNavigator');
+      if (user) navigation.navigate('SearchOrScan');
       else navigation.navigate('LoginScreen');
     }, 2000);
 

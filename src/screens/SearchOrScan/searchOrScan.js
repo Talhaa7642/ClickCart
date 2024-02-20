@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {SOLID_BLACK} from '../../utils/colors';
 import {MaterialCommunityIcons, Octicons} from '../../utils/icons';
 
-const ScanQRScreen = ({navigation}) => {
+const SearchOrScan = ({navigation}) => {
   return (
     <LinearGradient
       colors={['#4c56', '#3b5998', '#192f6a']}
@@ -29,7 +29,7 @@ const ScanQRScreen = ({navigation}) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate('BottomTabNavigator')}
+            onPress={() => navigation.navigate('ScanScreen')}
             style={[
               styles.input,
               {
@@ -54,4 +54,4 @@ const ScanQRScreen = ({navigation}) => {
   );
 };
 
-export default ScanQRScreen;
+export default SearchOrScan;

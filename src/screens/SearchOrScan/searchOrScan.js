@@ -29,7 +29,7 @@ const SearchOrScan = ({navigation}) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate('ScanScreen')}
+            onPress={() => navigation.navigate('BottomTabNavigator')}
             style={[
               styles.input,
               {

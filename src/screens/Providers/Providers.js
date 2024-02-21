@@ -6,6 +6,7 @@ import {db, storeRef, userRef} from '../../firebase';
 import Loader from '../../components/Loader';
 import FastImage from 'react-native-fast-image';
 import Toast from 'react-native-simple-toast';
+import Header from '../../components/Header';
 
 const Providers = () => {
   const [loader, setLoader] = useState(true);
@@ -68,6 +69,7 @@ const Providers = () => {
 
   return (
     <View style={styles.container}>
+      <Header />
       {loader ? (
         <Loader indicatorStyle={styles.indicator} />
       ) : (

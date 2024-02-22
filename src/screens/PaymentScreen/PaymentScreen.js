@@ -14,7 +14,7 @@ import Divider from '../../components/Divider';
 import SmallButton from '../../components/SmallButton';
 import {W_WIDTH} from '../../utils/dimensions';
 import AppTextInput from '../../components/AppTextInput';
-import {addDoc} from 'firebase/firestore';
+import {addDoc, serverTimestamp} from 'firebase/firestore';
 import {orderRef} from '../../firebase';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -34,7 +34,6 @@ const PaymentScreen = ({navigation}) => {
   useEffect(() => {
     if (cart.length > 0) {
       let arr = cart.filter(el => el.quantity > 0);
-      console.log('arr', arr);
       setOrderData(arr);
     }
   }, [cart]);
@@ -48,6 +47,7 @@ const PaymentScreen = ({navigation}) => {
         status: 'pending',
         orderTotal,
         shippingAddress: address,
+        createdAt: serverTimestamp(),
         cart: JSON.stringify(orderData),
       };
 

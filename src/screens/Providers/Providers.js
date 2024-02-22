@@ -69,7 +69,7 @@ const Providers = () => {
 
   return (
     <View style={styles.container}>
-      <Header />
+      {/* <Header /> */}
       {loader ? (
         <Loader indicatorStyle={styles.indicator} />
       ) : (

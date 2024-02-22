@@ -80,7 +80,9 @@ const AddProviders = ({navigation, props}) => {
             />
           </TouchableOpacity>
           <Text style={styles.services}>Providers</Text>
-          <TouchableOpacity style={{marginLeft: '2%', backgroundColor: WHITE, borderRadius: 20}} onPress={toggleModal}>
+          <TouchableOpacity
+            style={{marginLeft: '2%', backgroundColor: WHITE, borderRadius: 20}}
+            onPress={toggleModal}>
             <Image
               style={{height: 30, width: 30, borderRadius: 20}}
               source={require('../../../assets/images/plusround.png')}

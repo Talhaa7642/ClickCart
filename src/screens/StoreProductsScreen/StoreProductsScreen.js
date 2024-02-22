@@ -61,15 +61,17 @@ const StoreProductsScreen = ({navigation, route}) => {
           }
         });
         categories.push({name: 'All', id: Math.random()});
-        console.log('categories', categories);
+
         setCategories(categories);
 
         getDocs(productRef)
           .then(snapshot => {
             let products = [];
 
-            snapshot.docs.forEach(el => {
-              products.push({...el.data(), id: el.id, quantity: 0});
+            snapshot.docs.filter(el => {
+              if (el.data().storeId == storeInfo.id) {
+                products.push({...el.data(), id: el.id, quantity: 0});
+              }
             });
 
             dispatch(updateCart(products));

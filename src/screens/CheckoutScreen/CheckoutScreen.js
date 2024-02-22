@@ -14,16 +14,19 @@ import Circle from '../../components/Circle';
 import {Entypo, FontAwesome5} from '../../utils/icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {setAddress} from '../../store/features/cartSlice';
-import {doc, onSnapshot, updateDoc} from 'firebase/firestore';
-import {db, orderRef} from '../../firebase';
+import {doc, getDocs, onSnapshot, updateDoc} from 'firebase/firestore';
+import {db, orderRef, storeRef} from '../../firebase';
 import Loader from '../../components/Loader';
 import Toast from 'react-native-simple-toast';
+
+let storeInfo = null;
 
 const CheckoutScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const {user} = useSelector(store => store.user);
   const {cart, address} = useSelector(store => store.cart);
 
+  const [stores, setStores] = useState([]);
   const [shipAddress, setShipAddress] = useState('');
   const [orders, setOrders] = useState([]);
   const [loader1, setLoader1] = useState(false);
@@ -34,15 +37,50 @@ const CheckoutScreen = ({navigation}) => {
 
   useEffect(() => {
     setLoader1(true);
+    getDocs(storeRef)
+      .then(snapshot => {
+        let stores = [];
+        snapshot.docs.forEach(el => {
+          if (el.data().uid == user.uid) {
+            storeInfo = {
+              ...el.data(),
+              id: el.id,
+            };
+            console.log('storeInfo', storeInfo);
+            stores.push({...el.data(), id: el.id});
+          }
+        });
+        setStores(stores);
+        setLoader(false);
+      })
+      .catch(err => {
+        console.log('get store err', err);
+        setLoader(false);
+      });
+
     onSnapshot(orderRef, snapshot => {
       let orders = [];
       snapshot.docs.forEach(el => {
         if (el.data().status == 'pending') {
-          orders.push({
-            ...el.data(),
-            cart: JSON.parse(el.data().cart),
-            id: el.id,
-          });
+          let parsedOrder = JSON.parse(el.data().cart);
+
+          let filteredOrder = [];
+
+          if (parsedOrder && parsedOrder?.length > 0) {
+            parsedOrder?.forEach(el => {
+              if (el?.storeId == storeInfo?.id) {
+                filteredOrder.push(el);
+              }
+            });
+
+            if (filteredOrder.length > 0) {
+              orders.push({
+                ...el.data(),
+                cart: filteredOrder,
+                id: el.id,
+              });
+            }
+          }
         }
       });
 

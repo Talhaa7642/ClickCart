@@ -48,6 +48,8 @@ const BottomTabNavigator = ({navigation}) => {
         }
       });
       setCounter(counter);
+    } else {
+      setCounter([]);
     }
   }, [cart]);
 

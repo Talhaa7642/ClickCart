@@ -7,15 +7,19 @@ import MenuSvg from '../../assets/Svgs/MenuSvg';
 import Avatar from '../../components/Avatar';
 import AppTextInput from '../../components/AppTextInput';
 import Circle from '../../components/Circle';
-import {getDocs} from 'firebase/firestore';
-import {categoryRef, storeRef} from '../../firebase';
+import {getDocs, onSnapshot, orderBy, query, where} from 'firebase/firestore';
+import {categoryRef, orderRef, storeRef} from '../../firebase';
 import Loader from '../../components/Loader';
+import {useSelector} from 'react-redux';
 
 const HomeScreen = ({navigation, route}) => {
+  const {user} = useSelector(state => state.user);
+
   const [loader, setLoader] = useState(true);
   const [stores, setStores] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [query, setQuery] = useState('');
+  const [orderStatus, setOrderStatus] = useState('pending');
+  const [query1, setQuery1] = useState('');
   const [filteredStores, setFilteredStores] = useState([]);
 
   const renderItemH = ({item}) => <ShopsCard item={item} />;
@@ -58,34 +62,67 @@ const HomeScreen = ({navigation, route}) => {
         console.log('get store err', err);
         setLoader(false);
       });
+
+    const q = query(
+      orderRef,
+      where('uid', '==', user.uid),
+      where('status', '==', 'shipped'),
+      orderBy('createdAt', 'desc'),
+    );
+
+    onSnapshot(q, snapshot => {
+      let orders = [];
+      let status = '';
+      snapshot.docs.forEach(el => {
+        status == 'shipped';
+        orders.push({
+          ...el.data(),
+          id: el.id,
+        });
+      });
+
+      setOrderStatus(status);
+    });
   }, []);
 
   useEffect(() => {
-    if (query.length >= 2) {
+    if (query1.length >= 2) {
       let filtered = stores.filter(el => {
-        if (el.name.toLowerCase().includes(query.toLowerCase())) return el;
+        if (el.name.toLowerCase().includes(query1.toLowerCase())) return el;
       });
 
       setFilteredStores(filtered);
     } else {
       setFilteredStores([]);
     }
-  }, [query]);
+  }, [query1]);
 
   return (
     <View style={styles.container}>
       <View style={styles.row1}>
+        <Text style={styles.dashboardText}>Dashboard</Text>
+
         <Text
-          style={styles.dashboardText}>
-          Dashboard
+          style={{
+            fontSize: 18,
+            fontWeight: 'bold',
+            color: 'black',
+            textTransform: 'capitalize',
+          }}>
+          {orderStatus}
         </Text>
+        <Avatar
+          uri={require('../../assets/images/carpenter.png')}
+          onPress={() => navigation.navigate('ProfileScreen')}
+        />
       </View>
       <View style={{padding: '4%'}}>
         <AppTextInput
           placeholder="Search A Store or Product"
-          value={query}
-          onChangeText={setQuery}
+          value={query1}
+          onChangeText={setQuery1}
         />
+
         {loader ? (
           <Loader indicatorStyle={styles.indicator} />
         ) : (

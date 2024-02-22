@@ -75,57 +75,55 @@ const HomeScreen = ({navigation, route}) => {
   return (
     <View style={styles.container}>
       <View style={styles.row1}>
-        <Circle>
-          <MenuSvg />
-        </Circle>
-        <Avatar
-          uri={require('../../assets/images/carpenter.png')}
-          onPress={() => navigation.navigate('ProfileScreen')}
-        />
+        <Text
+          style={styles.dashboardText}>
+          Dashboard
+        </Text>
       </View>
+      <View style={{padding: '4%'}}>
+        <AppTextInput
+          placeholder="Search A Store or Product"
+          value={query}
+          onChangeText={setQuery}
+        />
+        {loader ? (
+          <Loader indicatorStyle={styles.indicator} />
+        ) : (
+          <>
+            <Pressable
+              style={styles.row2}
+              onPress={() => navigation.navigate('StoreScreen')}>
+              <Text style={styles.catTxt}>Categories</Text>
+              <Text style={styles.viewTxt}>view all</Text>
+            </Pressable>
 
-      <AppTextInput
-        placeholder="Search A Store or Product"
-        value={query}
-        onChangeText={setQuery}
-      />
-      {loader ? (
-        <Loader indicatorStyle={styles.indicator} />
-      ) : (
-        <>
-          <Pressable
-            style={styles.row1}
-            onPress={() => navigation.navigate('StoreScreen')}>
-            <Text style={styles.catTxt}>Categories</Text>
-            <Text style={styles.viewTxt}>view all</Text>
-          </Pressable>
-
-          <FlatList
-            horizontal
-            data={categories}
-            keyExtractor={item => item.id.toString()}
-            renderItem={renderItemH}
-          />
-
-          {filteredStores.length > 0 ? (
             <FlatList
-              numColumns={2}
-              columnWrapperStyle={styles.row}
-              data={filteredStores}
+              horizontal
+              data={categories}
               keyExtractor={item => item.id.toString()}
-              renderItem={renderItemV}
+              renderItem={renderItemH}
             />
-          ) : (
-            <FlatList
-              numColumns={2}
-              columnWrapperStyle={styles.row}
-              data={stores}
-              keyExtractor={item => item.id.toString()}
-              renderItem={renderItemV}
-            />
-          )}
-        </>
-      )}
+
+            {filteredStores.length > 0 ? (
+              <FlatList
+                numColumns={2}
+                columnWrapperStyle={styles.row}
+                data={filteredStores}
+                keyExtractor={item => item.id.toString()}
+                renderItem={renderItemV}
+              />
+            ) : (
+              <FlatList
+                numColumns={2}
+                columnWrapperStyle={styles.row}
+                data={stores}
+                keyExtractor={item => item.id.toString()}
+                renderItem={renderItemV}
+              />
+            )}
+          </>
+        )}
+      </View>
     </View>
   );
 };
@@ -135,7 +133,6 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: '4%',
     paddingBottom: 0,
   },
   services: {
@@ -154,6 +151,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: '2%',
     marginVertical: '2%',
   },
+  dashboardText: {
+    textAlign: 'center',
+    color: WHITE,
+    fontSize: 18,
+    fontWeight: '500',
+  },
   row: {
     flex: 1,
     justifyContent: 'space-around',
@@ -169,6 +172,16 @@ const styles = StyleSheet.create({
     // backgroundColor: 'green',
   },
   row1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+    height: '12%',
+    backgroundColor: 'grey',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+  row2: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

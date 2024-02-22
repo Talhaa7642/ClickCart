@@ -49,7 +49,6 @@ const ProductStack = () => (
 
 const Tab = createBottomTabNavigator();
 const ShopBottomTab = ({navigation}) => {
-  const dispatch = useDispatch();
 
   return (
     <Tab.Navigator
@@ -144,7 +143,7 @@ const ShopBottomTab = ({navigation}) => {
         }}
         listeners={({navigation, route}) => ({
           tabPress: e => {
-            if (route.name == 'ProfileScreen') dispatch(setUser(null));
+            if (route.name == 'ProfileScreen');
           },
         })}
         component={ProfileScreen}

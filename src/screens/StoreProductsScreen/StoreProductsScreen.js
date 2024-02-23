@@ -22,6 +22,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {updateCart} from '../../store/features/cartSlice';
 import Toast from 'react-native-simple-toast';
 import ShopsCard from '../../components/ShopsCard';
+import DealCard from '../../components/DealCard';
 
 const StoreProductsScreen = ({navigation, route}) => {
   const storeInfo = route.params;
@@ -29,7 +30,8 @@ const StoreProductsScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
   const {handleCart} = useCart();
   const {cart} = useSelector(store => store.cart);
-
+  const {deal} = useSelector(store => store.deal);
+  console.log('deal deal', deal);
   const [query, setQuery] = useState('');
   const [loader, setLoader] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -49,6 +51,8 @@ const StoreProductsScreen = ({navigation, route}) => {
       onPress={() => navigation.navigate('ProductDetail', item)}
     />
   );
+
+  const renderDeal = ({item}) => <DealCard item={item} />;
 
   useEffect(() => {
     getDocs(categoryRef)
@@ -176,6 +180,16 @@ const StoreProductsScreen = ({navigation, route}) => {
               data={cart}
               keyExtractor={item => item.id.toString()}
               renderItem={renderProductItem}
+            />
+          )}
+
+          {deal.length > 0 && (
+            <FlatList
+              numColumns={2}
+              columnWrapperStyle={styles.row}
+              data={deal}
+              keyExtractor={(item, i) => i.toString()}
+              renderItem={renderDeal}
             />
           )}
         </>

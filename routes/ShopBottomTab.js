@@ -26,6 +26,7 @@ import AddStore from '../src/screens/AddStore/AddStore';
 import AllProduct from '../src/screens/AllProduct/AllProduct';
 import {useDispatch} from 'react-redux';
 import {setUser} from '../src/store/features/userSlice';
+import AddDeal from '../src/screens/AddDeal/AddDeal';
 
 const Stack = createNativeStackNavigator();
 const CartStack = () => (
@@ -42,6 +43,7 @@ const ProductStack = () => (
   <Stack.Navigator screenOptions={{headerShown: false}}>
     <Stack.Screen name="SellerCenter" component={SellerCenter} />
     <Stack.Screen name="AddProduct" component={AddProduct} />
+    <Stack.Screen name="AddDeal" component={AddDeal} />
     <Stack.Screen name="AddStore" component={AddStore} />
     <Stack.Screen name="AllProduct" component={AllProduct} />
   </Stack.Navigator>
@@ -49,7 +51,6 @@ const ProductStack = () => (
 
 const Tab = createBottomTabNavigator();
 const ShopBottomTab = ({navigation}) => {
-
   return (
     <Tab.Navigator
       backBehavior="history"

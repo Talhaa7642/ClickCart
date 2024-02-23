@@ -21,6 +21,7 @@ import Toast from 'react-native-simple-toast';
 import DropDown from 'react-native-paper-dropdown';
 import FastImage from 'react-native-fast-image';
 import Loader from '../../components/Loader';
+import {useSelector} from 'react-redux';
 
 const AddProduct = () => {
   const {
@@ -29,6 +30,8 @@ const AddProduct = () => {
     image,
     setImage,
   } = useMedia();
+
+  const {user} = useSelector(state => state.user);
 
   const [loader, setLoader] = useState(false);
   const [loader1, setLoader1] = useState(false);
@@ -68,7 +71,13 @@ const AddProduct = () => {
     });
 
     getDocs(storeRef)
-      .then(snapshot => setStoreId(snapshot.docs[0].id))
+      .then(snapshot => {
+        snapshot.docs.forEach(el => {
+          if (el.data().uid == user.uid) {
+            setStoreId(el.id);
+          }
+        });
+      })
       .catch(err => console.log('get store err', err));
   }, []);
 

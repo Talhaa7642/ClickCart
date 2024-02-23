@@ -19,7 +19,8 @@ const SearchOrScan = ({navigation}) => {
 
         <View>
           <TouchableOpacity
-            onPress={() => navigation.navigate('SearchStore')}
+            onPress={() => navigation.navigate('BottomTabNavigator')}
+
             style={{...styles.input}}>
             <Text style={{fontWeight: '500', fontSize: 20, color: SOLID_BLACK}}>
               Search Store
@@ -29,7 +30,7 @@ const SearchOrScan = ({navigation}) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate('BottomTabNavigator')}
+              onPress={() => navigation.navigate('SearchStore')}
             style={[
               styles.input,
               {

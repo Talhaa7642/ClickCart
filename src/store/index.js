@@ -6,7 +6,7 @@ import rootReducer from './features';
 
 const persistConfig = {
   key: 'root',
-  whitelist: ['user', 'cart'],
+  whitelist: ['user', 'cart', 'deal'],
   keyPrefix: appName,
   storage: AsyncStorage,
 };

@@ -83,6 +83,20 @@ const SellerCenter = ({navigation}) => {
 
           <Feather name="chevron-right" size={30} color={SOLID_BLACK} />
         </Pressable>
+
+        <Pressable
+          style={styles.capsule}
+          onPress={() => navigation.navigate('AddDeal')}>
+          <Circle
+            size={24}
+            containerStyle={{backgroundColor: ORANGE, marginRight: '15%'}}>
+            <Text>3</Text>
+          </Circle>
+
+          <Text style={styles.capTxt}>Add Deal</Text>
+
+          <Feather name="chevron-right" size={30} color={SOLID_BLACK} />
+        </Pressable>
       </View>
     </View>
   );

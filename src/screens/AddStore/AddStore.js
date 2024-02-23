@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import Header from '../../components/Header';
 import AppTextInput from '../../components/AppTextInput';
 import {LIGHT_GREY1, MID_YELLOW, SOLID_BLACK} from '../../utils/colors';
@@ -11,16 +11,29 @@ import {useMedia} from '../../hooks/useMedia';
 import Toast from 'react-native-simple-toast';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import {useSelector} from 'react-redux';
+import DropDown from 'react-native-paper-dropdown';
 
 const AddStore = ({route}) => {
   const storeInfo = route.params;
 
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
+  const [delivery, setDelivery] = useState('');
+  const [showDropDown, setShowDropDown] = useState(false);
   const [loader, setLoader] = useState(false);
 
   const {user} = useSelector(store => store.user);
 
+  const providersDelivery = [
+    {
+      label: 'Yes',
+      value: 'yes',
+    },
+    {
+      label: 'No',
+      value: 'no',
+    },
+  ];
   const {
     handleGetCameraPermission,
     handleGetGalleryPermission,
@@ -85,6 +98,7 @@ const AddStore = ({route}) => {
 
   return (
     <View style={styles.container}>
+      <ScrollView>
       <Header title="Store Information" />
       <View style={styles.row}>
         <Text style={styles.txt}>Store Information</Text>
@@ -109,23 +123,39 @@ const AddStore = ({route}) => {
       <AppTextInput
         hideIcon
         placeholder="Enter Address"
-        inputStyle={{marginBottom: '5%'}}
+        inputStyle={{marginVertical: '2%'}}
         value={address}
         onChangeText={setAddress}
       />
+      <View
+        style={{
+          width: '100%',
+          marginBottom: '2%',
+        }}>
+        <DropDown
+        placeholder='Provides Delivery'
+          visible={showDropDown}
+          showDropDown={() => setShowDropDown(true)}
+          onDismiss={() => setShowDropDown(false)}
+          value={delivery}
+          setValue={setDelivery}
+          list={providersDelivery}
+        />
+      </View>
 
       <View style={styles.row}>
         <Pressable style={styles.row1} onPress={handleGetGalleryPermission}>
           <EvilIcons name="image" size={30} color={SOLID_BLACK} />
-          <Text style={styles.txt1}>Upload Photos</Text>
+          <Text style={styles.txt1}>Upload Photo</Text>
         </Pressable>
 
         <Pressable style={styles.row1} onPress={handleGetCameraPermission}>
           <EvilIcons name="camera" size={30} color={SOLID_BLACK} />
-          <Text style={styles.txt1}>Upload Photos</Text>
+          <Text style={styles.txt1}>Upload CNIC Picture</Text>
         </Pressable>
       </View>
 
+      </ScrollView>
       {storeInfo?.name ? null : (
         <SmallButton
           loader={loader}
@@ -171,7 +201,7 @@ const styles = StyleSheet.create({
   txt1: {
     marginTop: '2%',
     fontWeight: '400',
-    fontSize: 14,
+    fontSize: 12,
     color: SOLID_BLACK,
   },
   row1: {

@@ -47,5 +47,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>StripePublishableKey</key>
+<string>pk_test_51OmkynCSwFXRXCU30wq5ojoJ8pMMNjz6MiSOeg3DpVjVcevsBeOGiAbRi5OSC8MWgKrsZbUZYGgqdovYfvZDTqnJ00WdpNH4EK</string>
 </dict>
 </plist>

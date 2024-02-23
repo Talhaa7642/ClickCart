@@ -180,6 +180,7 @@ const SignUpScreen = ({navigation}) => {
           marginBottom: '2%',
         }}>
         <DropDown
+        placeholder='Select Role'
           visible={showDropDown}
           showDropDown={() => setShowDropDown(true)}
           onDismiss={() => setShowDropDown(false)}

@@ -31,6 +31,7 @@ import QRCodeGenerator from '../src/screens/GenerateQRCode/GenerateQRCode';
 import SearchOrScan from '../src/screens/SearchOrScan/searchOrScan';
 import AdminBottomTab from './AdminBottomTab';
 import StripePaymentScreen from '../src/screens/StripePaymentScreen/StripePaymentScreen';
+import QRCodeScannerScreen from '../src/screens/QRScanScreen/QRScanScreen';
 // import { ScanScreen } from '../src/screens/QRScanScreen/QRScanScreen';
 
 const Stack = createNativeStackNavigator();
@@ -67,7 +68,7 @@ const RootStack = () => {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="SearchOrScan" component={SearchOrScan} />
-      {/* <Stack.Screen name="ScanScreen" component={ScanScreen} /> */}
+      {/* <Stack.Screen name="QRCodeScannerScreen" component={QRCodeScannerScreen} /> */}
       <Stack.Screen name="AddLocation" component={AddLocation} />
 
       <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} />

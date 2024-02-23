@@ -92,7 +92,7 @@ const AddDeal = () => {
   };
 
   return (
-    <View>
+    <View style={{alignItems: 'center', justifyContent: 'center', flex: 1, paddingHorizontal: '4%'}}>
       <AppTextInput
         hideIcon
         placeholder="Enter Deal Name"

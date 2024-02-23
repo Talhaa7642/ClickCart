@@ -101,20 +101,6 @@ const HomeScreen = ({navigation, route}) => {
     <View style={styles.container}>
       <View style={styles.row1}>
         <Text style={styles.dashboardText}>Dashboard</Text>
-
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: 'bold',
-            color: 'black',
-            textTransform: 'capitalize',
-          }}>
-          {orderStatus}
-        </Text>
-        <Avatar
-          uri={require('../../assets/images/carpenter.png')}
-          onPress={() => navigation.navigate('ProfileScreen')}
-        />
       </View>
       <View style={{padding: '4%'}}>
         <AppTextInput

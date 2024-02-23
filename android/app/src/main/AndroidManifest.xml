@@ -28,5 +28,8 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+      <meta-data
+        android:name="com.stripe.publishable_key"
+        android:value="pk_test_51OmkynCSwFXRXCU30wq5ojoJ8pMMNjz6MiSOeg3DpVjVcevsBeOGiAbRi5OSC8MWgKrsZbUZYGgqdovYfvZDTqnJ00WdpNH4EK" />
     </application>
 </manifest>

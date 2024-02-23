@@ -30,6 +30,7 @@ import Providers from '../src/screens/Providers/Providers';
 import QRCodeGenerator from '../src/screens/GenerateQRCode/GenerateQRCode';
 import SearchOrScan from '../src/screens/SearchOrScan/searchOrScan';
 import AdminBottomTab from './AdminBottomTab';
+import StripePaymentScreen from '../src/screens/StripePaymentScreen/StripePaymentScreen';
 // import { ScanScreen } from '../src/screens/QRScanScreen/QRScanScreen';
 
 const Stack = createNativeStackNavigator();
@@ -83,6 +84,7 @@ const RootStack = () => {
         name="PreviousServicesScreen"
         component={PreviousServicesScreen}
       />
+      <Stack.Screen name="StripePaymentScreen" component={StripePaymentScreen} />
       {/* Admin Side Routes*/}
       <Stack.Screen name="AdminDashboard" component={AdminDashboard} />
       <Stack.Screen name="BookingScreen" component={BookingScreen} />

@@ -958,6 +958,14 @@ PODS:
   - React-Mapbuffer (0.73.2):
     - glog
     - React-debug
+  - react-native-camera (4.2.1):
+    - React-Core
+    - react-native-camera/RCT (= 4.2.1)
+    - react-native-camera/RN (= 4.2.1)
+  - react-native-camera/RCT (4.2.1):
+    - React-Core
+  - react-native-camera/RN (4.2.1):
+    - React-Core
   - react-native-geolocation-service (5.3.1):
     - React
   - react-native-maps (1.9.1):
@@ -1175,6 +1183,42 @@ PODS:
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
   - SocketRocket (0.6.1)
+  - Stripe (23.22.1):
+    - StripeApplePay (= 23.22.1)
+    - StripeCore (= 23.22.1)
+    - StripePayments (= 23.22.1)
+    - StripePaymentsUI (= 23.22.1)
+    - StripeUICore (= 23.22.1)
+  - stripe-react-native (0.37.0):
+    - React-Core
+    - Stripe (~> 23.22.0)
+    - StripeApplePay (~> 23.22.0)
+    - StripeFinancialConnections (~> 23.22.0)
+    - StripePayments (~> 23.22.0)
+    - StripePaymentSheet (~> 23.22.0)
+    - StripePaymentsUI (~> 23.22.0)
+  - StripeApplePay (23.22.1):
+    - StripeCore (= 23.22.1)
+  - StripeCore (23.22.1)
+  - StripeFinancialConnections (23.22.1):
+    - StripeCore (= 23.22.1)
+    - StripeUICore (= 23.22.1)
+  - StripePayments (23.22.1):
+    - StripeCore (= 23.22.1)
+    - StripePayments/Stripe3DS2 (= 23.22.1)
+  - StripePayments/Stripe3DS2 (23.22.1):
+    - StripeCore (= 23.22.1)
+  - StripePaymentSheet (23.22.1):
+    - StripeApplePay (= 23.22.1)
+    - StripeCore (= 23.22.1)
+    - StripePayments (= 23.22.1)
+    - StripePaymentsUI (= 23.22.1)
+  - StripePaymentsUI (23.22.1):
+    - StripeCore (= 23.22.1)
+    - StripePayments (= 23.22.1)
+    - StripeUICore (= 23.22.1)
+  - StripeUICore (23.22.1):
+    - StripeCore (= 23.22.1)
   - Toast (4.1.0)
   - TOCropViewController (2.6.1)
   - Yoga (1.14.0)
@@ -1233,6 +1277,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector-modern`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
+  - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -1266,6 +1311,7 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - "stripe-react-native (from `../node_modules/@stripe/stripe-react-native`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1286,6 +1332,14 @@ SPEC REPOS:
     - SDWebImage
     - SDWebImageWebPCoder
     - SocketRocket
+    - Stripe
+    - StripeApplePay
+    - StripeCore
+    - StripeFinancialConnections
+    - StripePayments
+    - StripePaymentSheet
+    - StripePaymentsUI
+    - StripeUICore
     - Toast
     - TOCropViewController
 
@@ -1347,6 +1401,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   React-Mapbuffer:
     :path: "../node_modules/react-native/ReactCommon"
+  react-native-camera:
+    :path: "../node_modules/react-native-camera"
   react-native-geolocation-service:
     :path: "../node_modules/react-native-geolocation-service"
   react-native-maps:
@@ -1413,6 +1469,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  stripe-react-native:
+    :path: "../node_modules/@stripe/stripe-react-native"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1458,6 +1516,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 03644c063fc3621c9a4e8bf263a8150909129618
   React-logger: 66b168e2b2bee57bd8ce9e69f739d805732a5570
   React-Mapbuffer: 9ee041e1d7be96da6d76a251f92e72b711c651d6
+  react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
   react-native-geolocation-service: 608e1da71a1ac31b4de64d9ef2815f697978c55b
   react-native-maps: 4f45622710094c3603b262279c40026750579b1f
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
@@ -1494,6 +1553,15 @@ SPEC CHECKSUMS:
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  Stripe: b65e9f748f8f51b51e015b0d72f5474dc0708788
+  stripe-react-native: 3988dbb404888f4224bdb9dd27ddfdaac6d309a8
+  StripeApplePay: 4a2fef6cd4e1e9b2c0849919fc7b3a9c5c3684b1
+  StripeCore: e1f6cd91d1487c0f6b5db81b42aec860420f75c9
+  StripeFinancialConnections: d223a44613e6982cedd552c5950edc9b4901c90a
+  StripePayments: 76144e9e6b5fee859954238a175f859043562659
+  StripePaymentSheet: a25d920bb3bb5e2580696476482dc7df9cb5e4e2
+  StripePaymentsUI: 66088abec88754bbdd522ef227dfdbb2265a653e
+  StripeUICore: b193c7d35e9cd1b04bc9ed4a6fb8c548fcee83fa
   Toast: ec33c32b8688982cecc6348adeae667c1b9938da
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: 13c8ef87792450193e117976337b8527b49e8c03

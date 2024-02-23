@@ -58,3 +58,47 @@
 //     padding: 16
 //   }
 // });
+
+import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import { RNCamera } from 'react-native-camera';
+
+const QRCodeScannerScreen = () => {
+    const [data, setData] = useState('');
+
+  const onScan = e => {
+    setData(e.data);
+  };
+
+  console.log(data);
+
+  return (
+    <QRCodeScanner
+      onRead={onScan}
+      flashMode={RNCamera.Constants.FlashMode.auto}
+      topContent={
+        <Text style={styles.centerText}>
+          Scan the QR code.
+        </Text>
+      }
+      bottomContent={
+        <Text style={styles.centerText}>
+          Place a QR code within the frame to scan it.
+        </Text>
+      }
+    />
+  );
+};
+
+const styles = StyleSheet.create({
+  centerText: {
+    flex: 1,
+    fontSize: 18,
+    padding: 32,
+    color: '#777',
+    textAlign: 'center',
+  },
+});
+
+export default QRCodeScannerScreen;

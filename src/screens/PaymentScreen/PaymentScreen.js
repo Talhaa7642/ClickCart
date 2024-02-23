@@ -29,6 +29,7 @@ const PaymentScreen = ({navigation}) => {
   const {cart, address, orderTotal} = useSelector(store => store.cart);
 
   const [loader, setLoader] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [orderData, setOrderData] = useState([]);
 
   useEffect(() => {
@@ -73,19 +74,15 @@ const PaymentScreen = ({navigation}) => {
       <View style={styles.innerContainer}>
         <View style={styles.topContainer}>
           <SmallButton
+          onPress={()=> navigation.navigate('StripePaymentScreen')}
             title="Pay Using Online"
             titleStyle={styles.titleStyle}
             btnStyle={styles.btnStyle1}
           />
-          <SmallButton
-            title="Cash"
-            titleStyle={styles.titleStyle}
-            btnStyle={styles.btnStyle2}
-          />
         </View>
         <View style={styles.bottomContainer}>
           <Text style={styles.bottomTxt}>
-            Enter your password to complete payment.
+            Enter your password for cash payment.
           </Text>
           <AppTextInput hideIcon inputStyle={{marginVertical: '10%'}} />
           <SmallButton

@@ -60,7 +60,7 @@ const AdminBottomTab = ({navigation}) => {
         }}
         listeners={({navigation, route}) => ({
           tabPress: e => {
-            if (route.name == 'ProfileScreen') dispatch(setUser(null));
+            if (route.name == 'ProfileScreen');
           },
         })}
         component={ProfileScreen}

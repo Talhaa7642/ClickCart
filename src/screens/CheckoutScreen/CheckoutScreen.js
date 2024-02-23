@@ -139,7 +139,7 @@ const CheckoutScreen = ({navigation}) => {
                 style={styles.inputContainer}
                 onChangeText={setShipAddress}
                 value={shipAddress}
-                placeholder="Enter address"
+                placeholder="Enter address & Phone no."
                 placeholderTextColor={DARK_GREY}
               />
             </View>
